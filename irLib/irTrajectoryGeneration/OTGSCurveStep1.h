@@ -16,8 +16,11 @@ namespace irLib
 	{
 		enum InoperTimeProfileSCurve
 		{
-			notAssigned = 0,	
-			inop_NegTriPosTri, inop_NegTriPosTrap, inop_NegTrapPosTri, inop_NegTrapPosTrap,
+			notAssigned = 0,
+			inop_NegTriPosTri,
+			inop_NegTriPosTrap,
+			inop_NegTrapPosTri,
+			inop_NegTrapPosTrap,
 		};
 
 		typedef struct _treeSCurveStep1
@@ -51,6 +54,10 @@ namespace irLib
 		// main function..
 		void calculateMinimumTimeAndInoperTimeSCurve(TreeSCurveStep1* decisionTreeStep1);
 
+
+		// main fuction for minimum time ( called inside the function 'calculateMinimumTimeAndInoperTimeSCurve' )
+		void calculateMiniumumTimeSCurve(TreeSCurveStep1* decisionTreeStep1);
+
 		// calculate minimum time and save at _tmin
 		void calculateTime_PosTriNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // numerical solution (case 1)
 		void calculateTime_PosTriZeroNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 2)
@@ -61,9 +68,18 @@ namespace irLib
 		void calculateTime_PosTriNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 7)
 		void calculateTime_PosTriZeroNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 8)
 		
-		// calculate inoperative time interval according to 'Proflie of Minimum Time'
-		//void calcInopTime_SCurveStep1(TreeSCurveStep1* decisionTreeStep1);
-		//void setInopProfile_PosTrapZeroNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1);
+
+		// main function for inoperative time interval ( called inside the function 'calculateMinimumTimeAndInoperTimeSCurve' )
+		void calculateInoperTimeSCurve(TreeSCurveStep1* decisionTreeStep1);
+
+		// 4 cases for inoperative time interval
+		void SetProfile1_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
+		void SetProfile2_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
+		void SetProfile3_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
+		void SetProfile4_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
+
+		// calculate time by profiles were set
+		void calcInopTimeProfile_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, InoperTimeProfileSCurve begin, InoperTimeProfileSCurve end);
 
 		// assistant function
 		void FromAToZero_SCurveStep1(TreeSCurveStep1* dtStep1);
@@ -100,9 +116,18 @@ namespace irLib
 		bool Decision26_SCurveStep1(TreeSCurveStep1* dtStep1);
 		bool Decision27_SCurveStep1(TreeSCurveStep1* dtStep1);
 
-		// decision boolean function for inoperative time interval
-		bool inopTimeDecision1_SCurveStep1(TreeSCurveStep1* dtStep1);
-		bool inopTimeDecision2_SCurveStep1(TreeSCurveStep1* dtStep1);
+
+		// decision for inoperative time interval
+		bool Decision0_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
+		bool Decision1_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
+		bool Decision2_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
+		bool Decision3_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
+		bool Decision4_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
+		bool Decision5_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
+		bool Decision6_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
+		bool Decision7_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
+
+
 
 		// functions for numerical process
 		void PosTriNegTriFcn(const VectorX& x, VectorX& f, MatrixX& ig, void* f_data); // case 1

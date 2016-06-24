@@ -50,11 +50,11 @@ int main()
 	//maxVel = robot->getJointPtr(jointIdx)->getLimitVelUpper();
 	//maxAcc = robot->getJointPtr(jointIdx)->getLimitAccUpper();
 	//maxJer = robot->getJointPtr(jointIdx)->getLimitJerkUpper();
-	//curPos = makeRandLU(robot->getJointPtr(0)->getLimitPosLower(), robot->getJointPtr(0)->getLimitPosUpper());
-	//curVel = makeRandLU(robot->getJointPtr(0)->getLimitVelLower(), robot->getJointPtr(0)->getLimitVelUpper());
-	//curAcc = makeRandLU(/*robot->getJointPtr(0)->getLimitAccLower()*/0.0, robot->getJointPtr(0)->getLimitAccUpper());
-	//tarPos = makeRandLU(robot->getJointPtr(0)->getLimitPosLower(), robot->getJointPtr(0)->getLimitPosUpper());
-	//tarVel = makeRandLU(robot->getJointPtr(0)->getLimitVelLower(), robot->getJointPtr(0)->getLimitVelUpper());
+	//curPos = makeRandLU(robot->getJointPtr(jointIdx)->getLimitPosLower(), robot->getJointPtr(jointIdx)->getLimitPosUpper());
+	//curVel = makeRandLU(robot->getJointPtr(jointIdx)->getLimitVelLower(), robot->getJointPtr(jointIdx)->getLimitVelUpper());
+	//curAcc = makeRandLU(/*robot->getJointPtr(jointIdx)->getLimitAccLower()*/0.0, robot->getJointPtr(jointIdx)->getLimitAccUpper());
+	//tarPos = makeRandLU(robot->getJointPtr(jointIdx)->getLimitPosLower(), robot->getJointPtr(jointIdx)->getLimitPosUpper());
+	//tarVel = makeRandLU(robot->getJointPtr(jointIdx)->getLimitVelLower(), robot->getJointPtr(jointIdx)->getLimitVelUpper());
 	//curTime = 0.0;
 	
 	

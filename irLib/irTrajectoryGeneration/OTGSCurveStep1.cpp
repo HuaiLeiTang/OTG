@@ -39,388 +39,76 @@ namespace irLib
 		{
 			LOGIF(abs(decisionTreeStep1->_currentAcceleration) <= decisionTreeStep1->_maxAcceleration, "current acceleration must be smaller than max acceleration");
 
-			// decision tree start!
-		//decisionBox_01:
-			if (Decision1_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_02;
-			}
-			else
-			{
-				//ReverseSign_SCurveStep1(decisionTreeStep1);
-				//goto decisionBox_02;
-				goto decisionBox_xx;
-			}
+			calculateMiniumumTimeSCurve(decisionTreeStep1);
+			//calculateInoperTimeSCurve(decisionTreeStep1);
 
-		decisionBox_02:
-			if (Decision2_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_03;
-			}
-			else
-			{
-				goto decisionBox_12;
-			}
-
-		decisionBox_03:
-			if (Decision3_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_04;
-			}
-			else
-			{
-				goto decisionBox_08;
-			}
-
-		decisionBox_04:
-			if (Decision4_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_05;
-			}
-			else
-			{
-				goto decisionBox_24;
-			}
-
-		decisionBox_05:
-			if (Decision5_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_06;
-			}
-			else
-			{
-				goto decisionBox_07;
-			}
-
-		decisionBox_06:
-			if (Decision6_SCurveStep1(decisionTreeStep1))
-			{
-				LOG(" PosTrapZeroNegTri");
-				calculateTime_PosTrapZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				//FromAToZero_SCurveStep1(decisionTreeStep1);
-				//setInopProfile_PosTrapZeroNegTri_SCurveStep1(decisionTreeStep1);
-				//calcInopTime_SCurveStep1(decisionTreeStep1);
-				return;
-			}
-			else
-			{
-				LOG(" PosTrapNegTri");
-				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				return;
-			}
-
-		decisionBox_07:
-			if (Decision7_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_17;
-			}
-			else
-			{
-				LOG(" PosTrapNegTri");
-				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				return;
-			}
-
-		decisionBox_08:
-			if (Decision8_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_09;
-			}
-			else
-			{
-				goto decisionBox_xx;
-			}
-
-		decisionBox_09:
-			if (Decision9_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_10;
-			}
-			else
-			{
-				goto decisionBox_11;
-			}
-
-		decisionBox_10:
-			if (Decision10_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_05;
-			}
-			else
-			{
-				LOG(" PosTriNegTri");
-				calculateTime_PosTriNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				return;
-			}
-
-		decisionBox_11:
-			if (Decision11_SCurveStep1(decisionTreeStep1))
-			{
-				LOG(" PosTriZeroNegTri");
-				calculateTime_PosTriZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				return;
-			}
-			else
-			{
-				LOG(" PosTriNegTri");
-				calculateTime_PosTriNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				return;
-			}
-
-		decisionBox_12:
-			if (Decision12_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_13;
-			}
-			else
-			{
-				goto decisionBox_14;
-			}
-
-		decisionBox_13:
-			if (Decision13_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_xx;
-			}
-			else
-			{
-				goto decisionBox_xx;
-			}
-
-		decisionBox_14:
-			if (Decision14_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_20;
-			}
-			else
-			{
-				goto decisionBox_16;
-			}
-
-		decisionBox_15:
-			if (Decision15_SCurveStep1(decisionTreeStep1))
-			{
-				LOG("before call calculate minimum time function, move a to zero needed!!!");
-				LOG(" NegTrapPosTri");
-				FromAToZero_SCurveStep1(decisionTreeStep1);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				// maybe restoring functions are net needed... depends on the algorithm of calculating inoperative time
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				FromZeroToA_SCurveStep1(decisionTreeStep1);
-				// restoring -end-
-				return;
-			}
-			else
-			{
-				goto decisionBox_19;
-			}
-
-		decisionBox_16:
-			if (Decision16_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_18;
-			}
-			else
-			{
-				goto decisionBox_15;
-			}
-
-		decisionBox_17:
-			if (Decision17_SCurveStep1(decisionTreeStep1))
-			{
-				LOG(" PosTrapZeroNegTrap");
-				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				return;
-			}
-			else
-			{
-				LOG(" PosTrapNegTrap");
-				calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				return;
-			}
-
-		decisionBox_18:
-			if (Decision18_SCurveStep1(decisionTreeStep1))
-			{
-				LOG("before call calculate minimum time function, move a to zero needed!!!");
-				LOG(" NegTrapPosTri");
-				FromAToZero_SCurveStep1(decisionTreeStep1);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				FromZeroToA_SCurveStep1(decisionTreeStep1);
-				return;
-			}
-			else
-			{
-				LOG("before call calculate minimum time function, move a to zero needed!!!");
-				LOG(" NegTrapZeroPosTri");
-				FromAToZero_SCurveStep1(decisionTreeStep1);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				calculateTime_PosTrapZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				FromZeroToA_SCurveStep1(decisionTreeStep1);
-				return;
-			}
-
-		decisionBox_19:
-			if (Decision19_SCurveStep1(decisionTreeStep1))
-			{
-				LOG("before call calculate minimum time function, move a to zero needed!!!");
-				LOG(" NegTrapPosTrap");
-				FromAToZero_SCurveStep1(decisionTreeStep1);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				FromZeroToA_SCurveStep1(decisionTreeStep1);
-				return;
-			}
-			else
-			{
-				LOG("before call calculate minimum time function, move a to zero needed!!!");
-				LOG(" NegTrapZeroPosTrap");
-				FromAToZero_SCurveStep1(decisionTreeStep1);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				FromZeroToA_SCurveStep1(decisionTreeStep1);
-				return;
-			}
-
-		decisionBox_20:
-			if (Decision20_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_21;
-			}
-			else
-			{
-				goto decisionBox_22;
-			}
-
-		decisionBox_21:
-			if (Decision21_SCurveStep1(decisionTreeStep1))
-			{
-				LOG(" PosTriNegTrap");
-				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				return;
-			}
-			else
-			{
-				LOG(" PosTriZeroNegTrap");
-				calculateTime_PosTriZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				return;
-			}
-
-		decisionBox_22:
-			if (Decision22_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_23;
-			}
-			else
-			{
-				LOG(" PosTriNegTrap");
-				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				return;
-			}
-
-		decisionBox_23:
-			if (Decision23_SCurveStep1(decisionTreeStep1))
-			{
-				LOG(" PosTrapNegTrap");
-				calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				return;
-			}
-			else
-			{
-				LOG(" PosTrapZeroNegTrap");
-				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				return;
-			}
-
-		decisionBox_24:
-			if (Decision24_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_25;
-			}
-			else
-			{
-				goto decisionBox_26;
-			}
-
-		decisionBox_25:
-			if (Decision25_SCurveStep1(decisionTreeStep1))
-			{
-				LOG("before call calculate minimum time function, move a to zero needed!!!");
-				LOG(" NegTriZeroPosTrap");
-				FromAToZero_SCurveStep1(decisionTreeStep1);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				calculateTime_PosTriZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				FromZeroToA_SCurveStep1(decisionTreeStep1);
-				return;
-			}
-			else
-			{
-				LOG("before call calculate minimum time function, move a to zero needed!!!");
-				LOG(" NegTriPosTrap");
-				FromAToZero_SCurveStep1(decisionTreeStep1);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				FromZeroToA_SCurveStep1(decisionTreeStep1);
-				return;
-			}
-
-		decisionBox_26:
-			if (Decision26_SCurveStep1(decisionTreeStep1))
-			{
-				goto decisionBox_27;
-			}
-			else
-			{
-				LOG("before call calculate minimum time function, move a to zero needed!!!");
-				LOG(" NegTriPosTrap");
-				FromAToZero_SCurveStep1(decisionTreeStep1);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				FromZeroToA_SCurveStep1(decisionTreeStep1);
-				return;
-			}
-
-		decisionBox_27:
-			if (Decision27_SCurveStep1(decisionTreeStep1))
-			{
-				LOG("before call calculate minimum time function, move a to zero needed!!!");
-				LOG(" NegTrapZeroPosTrap");
-				FromAToZero_SCurveStep1(decisionTreeStep1);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				FromZeroToA_SCurveStep1(decisionTreeStep1);
-				return;
-			}
-			else
-			{
-				LOG("before call calculate minimum time function, move a to zero needed!!!");
-				LOG(" NegTrapPosTrap");
-				FromAToZero_SCurveStep1(decisionTreeStep1);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				FromZeroToA_SCurveStep1(decisionTreeStep1);
-				return;
-			}
-
-		decisionBox_xx:
-			LOG(" not implemented yet....");
 			return;
-
 		}
 
 
 
+
+		void calculateInoperTimeSCurve(TreeSCurveStep1 * decisionTreeStep1)
+		{
+			// check necessary conditions for existence of inop. time
+			if (!Decision0_SCurveStep1InopTime(decisionTreeStep1))
+				return;
+
+			// 여기는 검증 필요함!
+			if (decisionTreeStep1->_currentAcceleration < 0.0)
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+
+			// 1,2 구분 없고, 3,4 구분 없을 수도 있음
+			if (decisionTreeStep1->_currentVelocity >= 0.0)
+			{
+				if (decisionTreeStep1->_currentVelocity <= decisionTreeStep1->_targetVelocity)
+				{
+					SetProfile1_SCurveStep1InopTime(decisionTreeStep1);
+				}
+				else
+				{
+					SetProfile2_SCurveStep1InopTime(decisionTreeStep1);
+				}
+			}
+			else
+			{
+				if (decisionTreeStep1->_currentVelocity <= decisionTreeStep1->_targetVelocity)
+				{
+					SetProfile3_SCurveStep1InopTime(decisionTreeStep1);
+				}
+				else
+				{
+					SetProfile4_SCurveStep1InopTime(decisionTreeStep1);
+				}
+			}
+
+
+			if (decisionTreeStep1->_inoperTimeExist)
+			{
+				calcInopTimeProfile_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_inopProfileBegin, decisionTreeStep1->_inopProfileEnd);
+				decisionTreeStep1->_t1begin += decisionTreeStep1->_tcurrNotChanging;
+				decisionTreeStep1->_t1end += decisionTreeStep1->_tcurrNotChanging;
+			}
+			
+		}
+
+		void calcInopTimeProfile_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1, InoperTimeProfileSCurve begin, InoperTimeProfileSCurve end)
+		{
+			if (begin != end)
+			{
+				// 같으면 같은 프로파일이니까 여러번돌려서 솔루션 찾고 큰거 작은거 나눠서 뱉어야 함...
+			}
+			else
+			{
+				//switch (begin)
+				//{
+				//case 1:
+				//	break;
+				//default:
+				//	break;
+				//}
+			}
+		}
 
 		void FromAToZero_SCurveStep1(TreeSCurveStep1 * dtStep1)
 		{
@@ -714,23 +402,519 @@ namespace irLib
 			return false;
 		}
 
-		bool inopTimeDecision1_SCurveStep1(TreeSCurveStep1 * dtStep1)
+		bool Decision0_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
 		{
-			// called when curAcc = 0 (after the function FromAToZero call)
-			// 일단 curVel 도 양수라고 생각
-			// 0에서 -amax 찍고 다시 0으로 올라왔을때 V 가 0 아래로 내려 가는지...
-			// V가 0보다 크면 true, 아니면 false!
+			// necessary conditions for existing of inoperative time interval
+			// if inoperatie time interval must not exists, return false;
+			if (RealLess(dtStep1->_currentVelocity * dtStep1->_targetVelocity, 0.0, 1E-6) ||
+				RealLess(dtStep1->_currentVelocity * (dtStep1->_targetPosition - dtStep1->_currentPosition), 0.0, 1E-6))
+				return false;
+			return true;
+		}
+
+		bool Decision1_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
+		{
 			if (dtStep1->_currentVelocity + calcDV_VShapeAcc(dtStep1->_currentAcceleration, -dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk) >= 0.0)
 				return true;
 			return false;
 		}
 
-		bool inopTimeDecision2_SCurveStep1(TreeSCurveStep1 * dtStep1) 
+		bool Decision2_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
 		{
-			// v 가 0 일 때, a 가 0->maxAcc->0 의 reverse V shape 일때 v target을 넘는지: 넘으면 true
+			Real alow = calcALow_VShapeAcc(dtStep1->_currentAcceleration, 0.0, dtStep1->_maxJerk, dtStep1->_currentVelocity, 0.0);
+			if (dtStep1->_currentVelocity + calcDV_VShapeAcc(dtStep1->_currentAcceleration, alow, 0.0, dtStep1->_maxJerk)
+				+ calcDV_revesreVShpaeAcc(0.0, dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk) >= dtStep1->_targetVelocity)
+				return true;
+			return false;
+		}
+
+		bool Decision3_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
+		{
+			Real alow = calcALow_VShapeAcc(dtStep1->_currentAcceleration, 0.0, dtStep1->_maxJerk, dtStep1->_currentVelocity, 0.0);
+			Real ahigh = calcAHigh_reverseVShapeAcc(0.0, 0.0, dtStep1->_maxJerk, 0.0, dtStep1->_targetVelocity);
+			if (dtStep1->_currentPosition + calcDP_VShapeAcc(dtStep1->_currentAcceleration, alow, 0.0, dtStep1->_maxJerk, dtStep1->_currentVelocity)
+				+ calcDP_reverseVShapeAcc(0.0, ahigh, 0.0, dtStep1->_maxJerk, 0.0) <= dtStep1->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision4_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
+		{
+			Real alow = calcALow_VShapeAcc(dtStep1->_currentAcceleration, 0.0, dtStep1->_maxJerk, dtStep1->_currentVelocity, 0.0);
+			if (dtStep1->_currentPosition
+				+ calcDP_VShapeAcc(dtStep1->_currentAcceleration, alow, 0.0, dtStep1->_maxJerk, dtStep1->_currentVelocity)
+				+ calcDP_TrapezoidAcc(0.0, dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk, 0.0, dtStep1->_targetVelocity) <= dtStep1->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision5_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
+		{
 			if (0.0 + calcDV_revesreVShpaeAcc(0.0, dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk) >= dtStep1->_targetVelocity)
 				return true;
 			return false;
+		}
+
+		bool Decision6_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
+		{
+			Real ahigh = calcAHigh_reverseVShapeAcc(0.0, 0.0, dtStep1->_maxJerk, 0.0, dtStep1->_targetVelocity);
+			if (dtStep1->_currentPosition
+				+ calcDP_NegTrapezoidAcc(dtStep1->_currentAcceleration, -dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk, dtStep1->_currentVelocity, 0.0)
+				+ calcDP_reverseVShapeAcc(0.0, ahigh, 0.0, dtStep1->_maxJerk, 0.0) <= dtStep1->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision7_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
+		{
+			if (dtStep1->_currentPosition
+				+ calcDP_NegTrapezoidAcc(dtStep1->_currentAcceleration, -dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk, dtStep1->_currentVelocity, 0.0)
+				+ calcDP_TrapezoidAcc(0.0, dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk, 0.0, dtStep1->_targetVelocity) <= dtStep1->_targetPosition)
+				return true;
+			return false;
+		}
+
+		void SetProfile1_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
+		{
+			// maxVel > tarVel > curVel > 0
+			if (Decision1_SCurveStep1InopTime(dtStep1))
+			{
+				if (Decision5_SCurveStep1InopTime(dtStep1))
+				{
+					if (Decision6_SCurveStep1InopTime(dtStep1))
+					{
+						dtStep1->_inoperTimeExist = true;
+						dtStep1->_inopProfileBegin = inop_NegTrapPosTri;
+					}
+				}
+				else
+				{
+					if (Decision7_SCurveStep1InopTime(dtStep1))
+					{
+						dtStep1->_inoperTimeExist = true;
+						dtStep1->_inopProfileBegin = inop_NegTrapPosTrap;
+					}
+				}
+			}
+			else
+			{
+				if (Decision2_SCurveStep1InopTime(dtStep1))
+				{
+					if (Decision3_SCurveStep1InopTime(dtStep1))
+					{
+						dtStep1->_inoperTimeExist = true;
+						dtStep1->_inopProfileBegin = inop_NegTriPosTri;
+					}
+				}
+				else
+				{
+					if (Decision4_SCurveStep1InopTime(dtStep1))
+					{
+						dtStep1->_inoperTimeExist = true;
+						dtStep1->_inopProfileBegin = inop_NegTriPosTrap;
+					}
+				}
+			}
+		}
+
+		void SetProfile2_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
+		{
+			// maxVel > curVel > tarVel > 0
+		}
+
+		void SetProfile3_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
+		{
+			// 0 > tarVel > curVel > -maxVel
+		}
+
+		void SetProfile4_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
+		{
+			// 0 > curVel > tarVel > -maxVel
+		}
+
+
+		void calculateMiniumumTimeSCurve(TreeSCurveStep1 * decisionTreeStep1)
+		{
+
+			// decision tree start!
+			//decisionBox_01:
+			if (Decision1_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_02;
+			}
+			else
+			{
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				goto decisionBox_02;
+				//goto decisionBox_xx;
+			}
+
+		decisionBox_02:
+			if (Decision2_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_03;
+			}
+			else
+			{
+				goto decisionBox_12;
+			}
+
+		decisionBox_03:
+			if (Decision3_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_04;
+			}
+			else
+			{
+				goto decisionBox_08;
+			}
+
+		decisionBox_04:
+			if (Decision4_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_05;
+			}
+			else
+			{
+				goto decisionBox_24;
+			}
+
+		decisionBox_05:
+			if (Decision5_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_06;
+			}
+			else
+			{
+				goto decisionBox_07;
+			}
+
+		decisionBox_06:
+			if (Decision6_SCurveStep1(decisionTreeStep1))
+			{
+				LOG(" PosTrapZeroNegTri");
+				calculateTime_PosTrapZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				goto decisionSuccess;
+			}
+			else
+			{
+				LOG(" PosTrapNegTri");
+				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				goto decisionSuccess;
+			}
+
+		decisionBox_07:
+			if (Decision7_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_17;
+			}
+			else
+			{
+				LOG(" PosTrapNegTri");
+				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				goto decisionSuccess;
+			}
+
+		decisionBox_08:
+			if (Decision8_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_09;
+			}
+			else
+			{
+				goto decisionBox_xx;
+			}
+
+		decisionBox_09:
+			if (Decision9_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_10;
+			}
+			else
+			{
+				goto decisionBox_11;
+			}
+
+		decisionBox_10:
+			if (Decision10_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_05;
+			}
+			else
+			{
+				LOG(" PosTriNegTri");
+				calculateTime_PosTriNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				goto decisionSuccess;
+			}
+
+		decisionBox_11:
+			if (Decision11_SCurveStep1(decisionTreeStep1))
+			{
+				LOG(" PosTriZeroNegTri");
+				calculateTime_PosTriZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				goto decisionSuccess;
+			}
+			else
+			{
+				LOG(" PosTriNegTri");
+				calculateTime_PosTriNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				goto decisionSuccess;
+			}
+
+		decisionBox_12:
+			if (Decision12_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_13;
+			}
+			else
+			{
+				goto decisionBox_14;
+			}
+
+		decisionBox_13:
+			if (Decision13_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_xx;
+			}
+			else
+			{
+				goto decisionBox_xx;
+			}
+
+		decisionBox_14:
+			if (Decision14_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_20;
+			}
+			else
+			{
+				goto decisionBox_16;
+			}
+
+		decisionBox_15:
+			if (Decision15_SCurveStep1(decisionTreeStep1))
+			{
+				LOG("before call calculate minimum time function, move a to zero needed!!!");
+				LOG(" NegTrapPosTri");
+				FromAToZero_SCurveStep1(decisionTreeStep1);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				// maybe restoring functions are net needed... depends on the algorithm of calculating inoperative time
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				// restoring -end-
+				goto decisionSuccess;
+			}
+			else
+			{
+				goto decisionBox_19;
+			}
+
+		decisionBox_16:
+			if (Decision16_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_18;
+			}
+			else
+			{
+				goto decisionBox_15;
+			}
+
+		decisionBox_17:
+			if (Decision17_SCurveStep1(decisionTreeStep1))
+			{
+				LOG(" PosTrapZeroNegTrap");
+				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				goto decisionSuccess;
+			}
+			else
+			{
+				LOG(" PosTrapNegTrap");
+				calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				goto decisionSuccess;
+			}
+
+		decisionBox_18:
+			if (Decision18_SCurveStep1(decisionTreeStep1))
+			{
+				LOG("before call calculate minimum time function, move a to zero needed!!!");
+				LOG(" NegTrapPosTri");
+				FromAToZero_SCurveStep1(decisionTreeStep1);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				goto decisionSuccess;
+			}
+			else
+			{
+				LOG("before call calculate minimum time function, move a to zero needed!!!");
+				LOG(" NegTrapZeroPosTri");
+				FromAToZero_SCurveStep1(decisionTreeStep1);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				calculateTime_PosTrapZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				goto decisionSuccess;
+			}
+
+		decisionBox_19:
+			if (Decision19_SCurveStep1(decisionTreeStep1))
+			{
+				LOG("before call calculate minimum time function, move a to zero needed!!!");
+				LOG(" NegTrapPosTrap");
+				FromAToZero_SCurveStep1(decisionTreeStep1);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				goto decisionSuccess;
+			}
+			else
+			{
+				LOG("before call calculate minimum time function, move a to zero needed!!!");
+				LOG(" NegTrapZeroPosTrap");
+				FromAToZero_SCurveStep1(decisionTreeStep1);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				goto decisionSuccess;
+			}
+
+		decisionBox_20:
+			if (Decision20_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_21;
+			}
+			else
+			{
+				goto decisionBox_22;
+			}
+
+		decisionBox_21:
+			if (Decision21_SCurveStep1(decisionTreeStep1))
+			{
+				LOG(" PosTriNegTrap");
+				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				goto decisionSuccess;
+			}
+			else
+			{
+				LOG(" PosTriZeroNegTrap");
+				calculateTime_PosTriZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				goto decisionSuccess;
+			}
+
+		decisionBox_22:
+			if (Decision22_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_23;
+			}
+			else
+			{
+				LOG(" PosTriNegTrap");
+				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				goto decisionSuccess;
+			}
+
+		decisionBox_23:
+			if (Decision23_SCurveStep1(decisionTreeStep1))
+			{
+				LOG(" PosTrapNegTrap");
+				calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				goto decisionSuccess;
+			}
+			else
+			{
+				LOG(" PosTrapZeroNegTrap");
+				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				goto decisionSuccess;
+			}
+
+		decisionBox_24:
+			if (Decision24_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_25;
+			}
+			else
+			{
+				goto decisionBox_26;
+			}
+
+		decisionBox_25:
+			if (Decision25_SCurveStep1(decisionTreeStep1))
+			{
+				LOG("before call calculate minimum time function, move a to zero needed!!!");
+				LOG(" NegTriZeroPosTrap");
+				FromAToZero_SCurveStep1(decisionTreeStep1);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				calculateTime_PosTriZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				goto decisionSuccess;
+			}
+			else
+			{
+				LOG("before call calculate minimum time function, move a to zero needed!!!");
+				LOG(" NegTriPosTrap");
+				FromAToZero_SCurveStep1(decisionTreeStep1);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				goto decisionSuccess;
+			}
+
+		decisionBox_26:
+			if (Decision26_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_27;
+			}
+			else
+			{
+				LOG("before call calculate minimum time function, move a to zero needed!!!");
+				LOG(" NegTriPosTrap");
+				FromAToZero_SCurveStep1(decisionTreeStep1);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				goto decisionSuccess;
+			}
+
+		decisionBox_27:
+			if (Decision27_SCurveStep1(decisionTreeStep1))
+			{
+				LOG("before call calculate minimum time function, move a to zero needed!!!");
+				LOG(" NegTrapZeroPosTrap");
+				FromAToZero_SCurveStep1(decisionTreeStep1);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				goto decisionSuccess;
+			}
+			else
+			{
+				LOG("before call calculate minimum time function, move a to zero needed!!!");
+				LOG(" NegTrapPosTrap");
+				FromAToZero_SCurveStep1(decisionTreeStep1);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				ReverseSign_SCurveStep1(decisionTreeStep1);
+				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				goto decisionSuccess;
+			}
+
+		decisionBox_xx:
+			LOG(" not implemented yet....");
+			return;
+
+		decisionSuccess:
+			decisionTreeStep1->_tmin += decisionTreeStep1->_tcurrNotChanging;
+			return;
+
 		}
 
 		// minimum time calc fcns
@@ -997,71 +1181,7 @@ namespace irLib
 			saveTime = e01 + e12 + e23 + e34 + e45 + e56;
 		}
 
-		//void calcInopTime_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1)
-		//{
-		//	switch (decisionTreeStep1->_inopProfileBegin)
-		//	{
-		//	case InoperTimeProfileSCurve::inop_NegTriPosTri:
-		//		break;
-		//	case InoperTimeProfileSCurve::inop_NegTriPosTrap:
-		//		break;
-		//	case InoperTimeProfileSCurve::inop_NegTrapPosTri:
-		//		break;
-		//	case InoperTimeProfileSCurve::inop_NegTrapPosTrap:
-		//		ReverseSign_SCurveStep1(decisionTreeStep1);
-		//		calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_t1begin);
-		//		break;
-		//	default:
-		//		LOG("not assigned - no inoperative time exists");
-		//	}
 
-		//	switch (decisionTreeStep1->_inopProfileEnd)
-		//	{
-		//	case InoperTimeProfileSCurve::inop_NegTriPosTri:
-		//		break;
-		//	case InoperTimeProfileSCurve::inop_NegTriPosTrap:
-		//		break;
-		//	case InoperTimeProfileSCurve::inop_NegTrapPosTri:
-		//		break;
-		//	case InoperTimeProfileSCurve::inop_NegTrapPosTrap:
-		//		ReverseSign_SCurveStep1(decisionTreeStep1);
-		//		calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_t1end);
-		//		break;
-		//	default:
-		//		LOG("not assigned - no inoperative time exists");
-		//	}
-		//}
-
-		//void setInopProfile_PosTrapZeroNegTri_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1)
-		//{
-		//	// tri 가 붙으면 tri 도 되고 trap 도 될 수 있을듯...??
-		//	if (inopTimeDecision1_SCurveStep1(decisionTreeStep1))
-		//	{
-		//		// 여기 잘못함...
-		//		//// NegTrap (v goes to zero) will be assigned
-		//		//if (inopTimeDecision2_SCurveStep1(decisionTreeStep1))
-		//		//{
-		//		//	decisionTreeStep1->_inopProfileBegin = InoperTimeProfileSCurve::inop_NegTrapPosTri;
-		//		//}
-		//		//else
-		//		//{
-		//		//	decisionTreeStep1->_inopProfileBegin = InoperTimeProfileSCurve::inop_NegTrapPosTrap;
-		//		//	decisionTreeStep1->_inopProfileEnd = InoperTimeProfileSCurve::inop_NegTrapPosTrap;
-		//		//}
-		//	}
-		//	else
-		//	{
-		//		// NegTri (v goes to zero) will be assigned
-		//		if (inopTimeDecision2_SCurveStep1(decisionTreeStep1))
-		//		{
-		//			decisionTreeStep1->_inopProfileBegin = InoperTimeProfileSCurve::inop_NegTriPosTri;
-		//		}
-		//		else
-		//		{
-		//			decisionTreeStep1->_inopProfileBegin = InoperTimeProfileSCurve::inop_NegTriPosTrap;
-		//		}
-		//	}
-		//}
 
 		// functions for numerical process
 		void PosTriNegTriFcn(const VectorX& x, VectorX& f, MatrixX& ig, void* f_data) // case 1
