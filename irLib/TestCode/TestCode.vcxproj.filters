@@ -26,5 +26,8 @@
     <ClCompile Include="reflexxesTest_ttt.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="OTGTrapTrajAPITest.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
