@@ -24,6 +24,7 @@ void saveRealArray2txt(Real** input, unsigned int size1, unsigned int size2, std
 
 int main()
 {
+
 	SerialOpenChainPtr robot = SerialOpenChainPtr(new efortRobot);
 	int dof = robot->getNumOfJoint();
 
