@@ -11,37 +11,53 @@
 #include "OTGSCurveStep1.h"
 #include "OTGSCurveStep2.h"
 
-using namespace std;
-using namespace irLib::irMath;
-
 namespace irLib
 {
 	namespace irTG
 	{
 		class OTGTrapTraj;
+		class OTGTrapTrajAPI;
+
 		class OTGSCurve;
+
+		typedef std::shared_ptr<OTGTrapTraj> OTGTrapTrajPtr;
+
+		class OTGTrapTrajAPI
+		{
+		public:
+			OTGTrapTrajAPI(unsigned int dof);
+			~OTGTrapTrajAPI();
+			void setKinematicConstraints(Real* _maxVelocity, Real* maxAcceleration);
+			void addPoint(Real* position, Real* velocity = NULL);
+			void printAllPointInfo() const;
+
+			void calculateJointTrajectory(Real** posTraj, Real** velTraj, Real** accTraj, unsigned int numOfdata);
+
+		private:
+			unsigned int _dof;
+			unsigned int _numOfAddPoint;
+
+			Real* _maxVelocity;
+			Real* _maxAcceleration;
+
+			std::vector<OTGTrapTrajPtr> _TrapTrajs;
+		};
 
 		class OTGTrapTraj
 		{
-		private:
-			unsigned int _dof;
-			Profile* _profile;
-			
-			Real* _maxVelocity;
-			Real* _maxAcceleration;
-			
-			Real* _currentPosition;
-			Real* _currentVelocity;
-			Real* _targetPosition;
-			Real* _targetVelocity;
-
-			Real _tsync;
 		public:
 			OTGTrapTraj(unsigned int dof);
 			~OTGTrapTraj();
 
+			void setKinematicConstraints(Real* maxVelocity, Real* maxAcceleration);
+			void setCurrentPosVelInfo(Real* currentPosition);
+			void setCurrentPosVelInfo(Real* currentPosition, Real* currentVelocity);
+			void setTargetPosVelInfo(Real* targetPosition, Real* targetVelocity);
+			void setTargetVelInfo(Real* targetVelocity);
+			void setTargetPosVelInfo(Real* targetPosition);
 			void setInputParameters(Real* maxVelocity, Real* maxAcceleration, Real* currentPosition,
 				Real* currentVelocity, Real* targetPosition, Real* targetVelocity);
+			void settcurr(Real tcurr) { _tcurr = tcurr; }
 
 			/*
 			* Step 1 : Calculate the synchronization time
@@ -70,7 +86,32 @@ namespace irLib
 			void calculateJointTrajectory(Real** posTraj, Real** velTraj, Real** accTraj, unsigned int numOfdata);
 
 			const Real gettsync() const { return _tsync; }
+			const bool gettargetVelSetSwi() const { return _targetVelSetSwi; }
+			Real* getTargetposition() const { return _targetPosition; }
+			Real* getTargetvelocity() const { return _targetVelocity; }
+			Real* getCurrentposition() const { return _currentPosition; }
+			Real* getCurrentvelocity() const { return _currentVelocity; }
+
+		private:
+			unsigned int _dof;
+			Profile* _profile;
+
+			Real* _maxVelocity;
+			Real* _maxAcceleration;
+
+			Real* _currentPosition;
+			Real* _currentVelocity;
+			Real* _targetPosition;
+			Real* _targetVelocity;
+
+			Real _tsync;
+			Real _tcurr;
+
+			bool _targetVelSetSwi;
 		};
+
+
+
 
 		class OTGSCurve
 		{
