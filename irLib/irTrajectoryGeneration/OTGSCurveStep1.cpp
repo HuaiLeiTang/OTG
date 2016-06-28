@@ -21,8 +21,9 @@ namespace irLib
 
 			tree->_tmin = RealMax;
 
-			tree->_inopProfileBegin = InoperTimeProfileSCurve::notAssigned;
-			tree->_inopProfileEnd = InoperTimeProfileSCurve::notAssigned;
+			tree->_minProfile = MinTimeProfileSCurve::min_notAssigned;
+			tree->_inopProfileBegin = InoperTimeProfileSCurve::inop_notAssigned;
+			tree->_inopProfileEnd = InoperTimeProfileSCurve::inop_notAssigned;
 			tree->_t1begin = RealMax;
 			tree->_t1end = RealMax;
 			tree->_inoperTimeExist = false;
@@ -40,7 +41,7 @@ namespace irLib
 			LOGIF(abs(decisionTreeStep1->_currentAcceleration) <= decisionTreeStep1->_maxAcceleration, "current acceleration must be smaller than max acceleration");
 
 			calculateMiniumumTimeSCurve(decisionTreeStep1);
-			//calculateInoperTimeSCurve(decisionTreeStep1);
+			calculateInoperTimeSCurve(decisionTreeStep1);
 
 			return;
 		}
@@ -61,6 +62,17 @@ namespace irLib
 			// 1,2 구분 없고, 3,4 구분 없을 수도 있음
 			if (decisionTreeStep1->_currentVelocity >= 0.0)
 			{
+				// min time 구하고 아래 같은 조건 필요할 수도 있음...
+				// case 1/2 를 만들 수 있는 minimum profile 일 때만 inoperative time interval 찾을 수 있도록!
+				// 이 조건 넣는다면, min time 구할 때 reverse 하고 구했었던건 어떻게 처리할지 생각하기..
+				// 아래 세개 프로파일 말고도 많이 있을 수 있음 (일단 세개만)
+				if (decisionTreeStep1->_minProfile != min_PosTrapNegTri &&
+					decisionTreeStep1->_minProfile != min_PosTrapZeroNegTri &&
+					decisionTreeStep1->_minProfile != min_PosTriZeroNegTri)
+					return;
+
+
+
 				if (decisionTreeStep1->_currentVelocity <= decisionTreeStep1->_targetVelocity)
 				{
 					SetProfile1_SCurveStep1InopTime(decisionTreeStep1);
@@ -72,6 +84,11 @@ namespace irLib
 			}
 			else
 			{
+				// a 를 0으로 내릴 때 v 가 0 위로 넘어가면 inoperative time interval 없을 듯...
+				if (RealBigger(decisionTreeStep1->_currentVelocity + calcDV_BackSlashAcc(decisionTreeStep1->_currentAcceleration, 0.0, decisionTreeStep1->_maxJerk), 0.0, 1E-6))
+					return;
+
+
 				if (decisionTreeStep1->_currentVelocity <= decisionTreeStep1->_targetVelocity)
 				{
 					SetProfile3_SCurveStep1InopTime(decisionTreeStep1);
@@ -94,15 +111,26 @@ namespace irLib
 
 		void calcInopTimeProfile_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1, InoperTimeProfileSCurve begin, InoperTimeProfileSCurve end)
 		{
-			if (begin != end)
+			if (begin == end)
 			{
 				// 같으면 같은 프로파일이니까 여러번돌려서 솔루션 찾고 큰거 작은거 나눠서 뱉어야 함...
 			}
 			else
 			{
+				// begin 이랑 end 랑 따로 스위치문 돌려서 시간 구하기
+
 				//switch (begin)
 				//{
-				//case 1:
+				//case inop_NegTriPosTri:
+				//	break;
+				//default:
+				//	break;
+				//}
+
+
+				//switch (begin)
+				//{
+				//case inop_NegTriPosTri:
 				//	break;
 				//default:
 				//	break;
@@ -544,9 +572,9 @@ namespace irLib
 			}
 			else
 			{
-				ReverseSign_SCurveStep1(decisionTreeStep1);
-				goto decisionBox_02;
-				//goto decisionBox_xx;
+				//ReverseSign_SCurveStep1(decisionTreeStep1);
+				//goto decisionBox_02;
+				goto decisionBox_xx;
 			}
 
 		decisionBox_02:
@@ -594,12 +622,14 @@ namespace irLib
 			{
 				LOG(" PosTrapZeroNegTri");
 				calculateTime_PosTrapZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = min_PosTrapZeroNegTri;
 				goto decisionSuccess;
 			}
 			else
 			{
 				LOG(" PosTrapNegTri");
 				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = min_PosTrapNegTri;
 				goto decisionSuccess;
 			}
 
@@ -612,6 +642,7 @@ namespace irLib
 			{
 				LOG(" PosTrapNegTri");
 				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = min_PosTrapNegTri;
 				goto decisionSuccess;
 			}
 

@@ -14,9 +14,17 @@ namespace irLib
 {
 	namespace irTG
 	{
+		enum MinTimeProfileSCurve
+		{
+			min_notAssigned = 0,
+			min_PosTrapNegTri,
+			min_PosTrapZeroNegTri,
+			min_PosTriZeroNegTri,
+		};
+
 		enum InoperTimeProfileSCurve
 		{
-			notAssigned = 0,
+			inop_notAssigned = 0,
 			inop_NegTriPosTri,
 			inop_NegTriPosTrap,
 			inop_NegTrapPosTri,
@@ -39,6 +47,7 @@ namespace irLib
 			Real _tcurr;								// current time
 			Real _tcurrNotChanging;						// current time never changed after first setting (for the function 'FromZeroToA_SCurveStep1': can be removed if not neddend)
 			Real _tmin;									// minimum reachable time
+			MinTimeProfileSCurve	_minProfile;		// min time profile for tmin
 			InoperTimeProfileSCurve _inopProfileBegin;	// inoperative time profile for t1begin
 			InoperTimeProfileSCurve _inopProfileEnd;	// inoperative time profile for t1bend
 			Real _t1begin;								// begin time of inopertative interval if it exists
