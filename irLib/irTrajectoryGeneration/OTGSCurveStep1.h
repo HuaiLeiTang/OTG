@@ -47,6 +47,8 @@ namespace irLib
 			Real _tcurr;								// current time
 			Real _tcurrNotChanging;						// current time never changed after first setting (for the function 'FromZeroToA_SCurveStep1': can be removed if not neddend)
 			Real _tmin;									// minimum reachable time
+			bool _bReversed;
+
 			MinTimeProfileSCurve	_minProfile;		// min time profile for tmin
 			InoperTimeProfileSCurve _inopProfileBegin;	// inoperative time profile for t1begin
 			InoperTimeProfileSCurve _inopProfileEnd;	// inoperative time profile for t1bend
@@ -124,6 +126,23 @@ namespace irLib
 		bool Decision25_SCurveStep1(TreeSCurveStep1* dtStep1);
 		bool Decision26_SCurveStep1(TreeSCurveStep1* dtStep1);
 		bool Decision27_SCurveStep1(TreeSCurveStep1* dtStep1);
+		// implemented at 160702 - from 28 to 43
+		bool Decision28_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision29_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision30_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision31_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision32_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision33_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision34_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision35_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision36_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision37_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision38_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision39_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision40_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision41_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision42_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision43_SCurveStep1(TreeSCurveStep1* dtStep1);
 
 
 		// decision for inoperative time interval

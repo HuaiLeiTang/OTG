@@ -22,6 +22,8 @@ namespace irLib
 
 			tree->_tcurr = tcurr;
 			tree->_tsync = tsync;
+			
+			tree->_bReversed = false;
 
 			return tree;
 		}
@@ -42,7 +44,11 @@ namespace irLib
 			}
 			else
 			{
-				goto decisionBox_xx;
+				// 일단 임시
+				ReverseSign_SCurveStep2(decisionTreeStep2);
+				decisionTreeStep2->_bReversed = true;
+				goto decisionBox_02;
+				//goto decisionBox_xx;
 			}
 		decisionBox_02:
 			if (Decision2_SCurveStep2(decisionTreeStep2))
@@ -69,7 +75,7 @@ namespace irLib
 			}
 			else
 			{
-				goto decisionBox_xx;
+				goto decisionBox_18;
 			}
 		decisionBox_05:
 			if (Decision5_SCurveStep2(decisionTreeStep2))
@@ -102,7 +108,7 @@ namespace irLib
 			}
 			else
 			{
-				goto decisionBox_xx;
+				goto decisionBox_13;
 			}
 		decisionBox_08:
 			if (Decision8_SCurveStep2(decisionTreeStep2))
@@ -138,25 +144,477 @@ namespace irLib
 		decisionBox_11:
 			if (Decision11_SCurveStep2(decisionTreeStep2))
 			{
-				goto decisionBox_xx;
+				goto decisionBox_37;
 			}
 			else
 			{
-				goto decisionBox_xx;
+				goto decisionBox_27;
 			}
 		decisionBox_12:
 			if (Decision12_SCurveStep2(decisionTreeStep2))
 			{
-				goto decisionBox_xx;
+				goto decisionBox_47;
 			}
 			else
 			{
-				goto decisionBox_xx;
+				goto decisionBox_41;
+			}
+		decisionBox_13:
+			if (Decision13_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" PosTriZeroPosTri");
+				calculateProfile_PosTriZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				goto decisionBox_14;
+			}
+		decisionBox_14:
+			if (Decision14_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTriZeroPosTri");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTriZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				goto decisionBox_15;
+			}
+		decisionBox_15:
+			if (Decision15_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTriZeroPosTri");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTriZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				goto decisionBox_16;
+			}
+		decisionBox_16:
+			if (Decision16_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTriZeroPosTrap");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTriZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				goto decisionBox_17;
+			}
+		decisionBox_17:
+			if (Decision17_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTriZeroPosTrap");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTriZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTrapZeroPosTrap");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTrapZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_18:
+			if (Decision18_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_19;
+			}
+			else
+			{
+				goto decisionBox_25;
+			}
+		decisionBox_19:
+			if (Decision19_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_20;
+			}
+			else
+			{
+				goto decisionBox_16;
+			}
+		decisionBox_20:
+			if (Decision20_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_21;
+			}
+			else
+			{
+				goto decisionBox_23;
+			}
+		decisionBox_21:
+			if (Decision21_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_22;
+			}
+			else
+			{
+				LOG(" PosTriZeroPosTrap");
+				calculateProfile_PosTriZeroPosTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_22:
+			if (Decision22_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" PosTrapZeroPosTri");
+				calculateProfile_PosTrapZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				LOG(" PosTrapZeroPosTrap");
+				calculateProfile_PosTrapZeroPosTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_23:
+			if (Decision23_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_24;
+			}
+			else
+			{
+				LOG(" PosTriZeroPosTrap");
+				calculateProfile_PosTriZeroPosTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_24:
+			if (Decision24_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" PosTrapZeroPosTri");
+				calculateProfile_PosTrapZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				LOG(" PosTriZeroPosTri");
+				calculateProfile_PosTriZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_25:
+			if (Decision25_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_26;
+			}
+			else
+			{
+				goto decisionBox_14;
+			}
+		decisionBox_26:
+			if (Decision26_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" PosTrapZeroPosTri");
+				calculateProfile_PosTrapZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				LOG(" PosTriZeroPosTri");
+				calculateProfile_PosTriZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_27:
+			if (Decision27_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_28;
+			}
+			else
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTriZeroNegTri");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTriZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_28:
+			if (Decision28_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_29;
+			}
+			else
+			{
+				goto decisionBox_33;
+			}
+		decisionBox_29:
+			if (Decision29_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_30;
+			}
+			else
+			{
+				goto decisionBox_32;
+			}
+		decisionBox_30:
+			if (Decision30_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" PosTriZeroNegTri");
+				calculateProfile_PosTriZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				goto decisionBox_31;
+			}
+		decisionBox_31:
+			if (Decision31_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" PosTrapZeroNegTri");
+				calculateProfile_PosTrapZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				LOG(" PosTriZeroNegTri");
+				calculateProfile_PosTriZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_32:
+			if (Decision32_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" PosTrapZeroNegTrap");
+				calculateProfile_PosTrapZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				goto decisionBox_31;
+			}
+		decisionBox_33:
+			if (Decision33_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_34;
+			}
+			else
+			{
+				goto decisionBox_36;
+			}
+		decisionBox_34:
+			if (Decision34_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" PosTriZeroNegTri");
+				calculateProfile_PosTriZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				goto decisionBox_35;
+			}
+		decisionBox_35:
+			if (Decision35_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" PosTriZeroNegTrap");
+				calculateProfile_PosTriZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				LOG(" PosTriZeroNegTri");
+				calculateProfile_PosTriZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_36:
+			if (Decision36_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" PosTrapZeroNegTrap");
+				calculateProfile_PosTrapZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				goto decisionBox_35;
+			}
+		decisionBox_37:
+			if (Decision37_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_38;
+			}
+			else
+			{
+				goto decisionBox_40;
+			}
+		decisionBox_38:
+			if (Decision38_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTriZeroPosTri");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTriZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				goto decisionBox_39;
+			}
+		decisionBox_39:
+			if (Decision39_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTriZeroPosTri");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTriZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTrapZeroPosTri");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTrapZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_40:
+			if (Decision40_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_39;
+			}
+			else
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTrapZeroPosTrap");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTrapZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_41:
+			if (Decision41_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_33;
+			}
+			else
+			{
+				goto decisionBox_42;
+			}
+		decisionBox_42:
+			if (Decision42_SCurveStep2(decisionTreeStep2))
+			{
+				goto decisionBox_43;
+			}
+			else
+			{
+				goto decisionBox_45;
+			}
+		decisionBox_43:
+			if (Decision43_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTriZeroNegTrap");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTriZeroPosTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				goto decisionBox_44;
+			}
+		decisionBox_44:
+			if (Decision44_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTriZeroNegTri");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTriZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTrapZeroNegTri");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTrapZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_45:
+			if (Decision45_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTriZeroNegTrap");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTriZeroPosTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				goto decisionBox_46;
+			}
+		decisionBox_46:
+			if (Decision46_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTrapZeroNegTrap");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTrapZeroPosTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTrapZeroNegTri");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTrapZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_47:
+			if (Decision47_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTrapZeroPosTri");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTrapZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				goto decisionBox_48;
+			}
+		decisionBox_48:
+			if (Decision48_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTrapZeroPosTri");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTrapZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
+				LOG(" NegTrapZeroPosTrap");
+				FromAToZero_SCurveStep2(decisionTreeStep2);
+				calculateProfile_PosTrapZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
 			}
 		decisionBox_xx:
 			LOG(" not implemented yet....");
 			return;
 
+		}
+
+		void FromAToZero_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			LOGIF(dtStep2->_currentAcceleration >= 0.0, "curAcc must be larger than zero - 'FromAToZero_SCurveStep2");
+			dtStep2->_tcurr += dtStep2->_currentAcceleration / dtStep2->_maxJerk;
+			dtStep2->_currentPosition += calcDP_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity);
+			dtStep2->_currentVelocity += calcDV_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk);
+			dtStep2->_currentAcceleration = 0.0;
+		}
+
+		void ReverseSign_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			dtStep2->_currentPosition *= -1;
+			dtStep2->_currentVelocity *= -1;
+			dtStep2->_currentAcceleration *= -1;
+			dtStep2->_targetPosition *= -1;
+			dtStep2->_targetVelocity *= -1;
 		}
 
 		bool Decision1_SCurveStep2(TreeSCurveStep2 * dtStep2)
@@ -186,9 +644,9 @@ namespace irLib
 		bool Decision4_SCurveStep2(TreeSCurveStep2 * dtStep2)
 		{
 			cout << " - 04";
-			Real taftertrap = dtStep2->_tcurr + calcDT_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, dtStep2->_targetVelocity);
+			Real tafterpostrap = dtStep2->_tcurr + calcDT_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, dtStep2->_targetVelocity);
 			if (dtStep2->_currentPosition + calcDP_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, dtStep2->_targetVelocity)
-				+ calcDP_constVel(dtStep2->_tsync - taftertrap, dtStep2->_targetVelocity) <= dtStep2->_targetPosition)
+				+ calcDP_constVel(dtStep2->_tsync - tafterpostrap, dtStep2->_targetVelocity) <= dtStep2->_targetPosition)
 				return true;
 			return false;
 		}
@@ -196,10 +654,10 @@ namespace irLib
 		bool Decision5_SCurveStep2(TreeSCurveStep2 * dtStep2)
 		{
 			cout << " - 05";
-			Real vaftertrap = dtStep2->_targetVelocity - calcDV_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
-			LOGIF(vaftertrap >= dtStep2->_targetVelocity, "wrong1 - Decision5_SCurveStep2");
-			Real taftertrap = dtStep2->_tcurr + calcDT_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vaftertrap);
-			if (taftertrap + calcDT_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk) >= dtStep2->_tsync)
+			Real vafterpostrap = dtStep2->_targetVelocity - calcDV_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(vafterpostrap >= dtStep2->_targetVelocity, "wrong1 - Decision5_SCurveStep2");
+			Real tafterpostrap = dtStep2->_tcurr + calcDT_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafterpostrap);
+			if (tafterpostrap + calcDT_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk) >= dtStep2->_tsync)
 				return true;
 			return false;
 		}
@@ -207,16 +665,14 @@ namespace irLib
 		bool Decision6_SCurveStep2(TreeSCurveStep2 * dtStep2)
 		{
 			cout << " - 06";
-			Real vaftertrap = dtStep2->_targetVelocity - calcDV_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
-			LOGIF(vaftertrap >= dtStep2->_targetVelocity, "wrong1 - Decision6_SCurveStep2");
-			Real taftertrap = dtStep2->_tcurr + calcDT_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vaftertrap);
-			Real hldTime = dtStep2->_tsync - taftertrap - calcDT_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
-			//cout << endl << dtStep2->_currentPosition + calcDP_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vaftertrap)
-			//	+ calcDP_constVel(hldTime, vaftertrap)
-			//	+ calcDP_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vaftertrap) << endl;
-			if (dtStep2->_currentPosition + calcDP_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vaftertrap)
-				+ calcDP_constVel(hldTime, vaftertrap)
-				+ calcDP_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vaftertrap) <= dtStep2->_targetPosition)
+			Real vafterpostrap = dtStep2->_targetVelocity - calcDV_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(vafterpostrap >= dtStep2->_targetVelocity, "wrong1 - Decision6_SCurveStep2");
+			Real tafterpostrap = dtStep2->_tcurr + calcDT_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafterpostrap);
+			Real hldTime = dtStep2->_tsync - tafterpostrap - calcDT_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision6_SCurveStep2");
+			if (dtStep2->_currentPosition + calcDP_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafterpostrap)
+				+ calcDP_constVel(hldTime, vafterpostrap)
+				+ calcDP_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterpostrap) <= dtStep2->_targetPosition)
 				return true;
 			return false;
 		}
@@ -225,9 +681,9 @@ namespace irLib
 		{
 			cout << " - 07";
 			Real ahigh = calcAHigh_reverseVShapeAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, dtStep2->_targetVelocity);
-			Real taftertri = dtStep2->_tcurr + calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, ahigh, 0.0, dtStep2->_maxJerk);
+			Real tafterpostri = dtStep2->_tcurr + calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, ahigh, 0.0, dtStep2->_maxJerk);
 			if (dtStep2->_currentPosition + calcDP_reverseVShapeAcc(dtStep2->_currentAcceleration, ahigh, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
-				+ calcDP_constVel(dtStep2->_tsync - taftertri, dtStep2->_targetVelocity) <= dtStep2->_targetPosition)
+				+ calcDP_constVel(dtStep2->_tsync - tafterpostri, dtStep2->_targetVelocity) <= dtStep2->_targetPosition)
 				return true;
 			return false;
 		}
@@ -235,9 +691,9 @@ namespace irLib
 		bool Decision8_SCurveStep2(TreeSCurveStep2 * dtStep2)
 		{
 			cout << " - 08";
-			Real vaftertri = dtStep2->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
-			LOGIF(vaftertri >= dtStep2->_targetVelocity, "wrong1 - Decision8_SCurveStep2");
-			Real alow = calcALow_VShapeAcc(0.0, 0.0, dtStep2->_maxJerk, vaftertri, dtStep2->_targetVelocity);
+			Real vafterpostri = dtStep2->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(vafterpostri >= dtStep2->_targetVelocity, "wrong1 - Decision8_SCurveStep2");
+			Real alow = calcALow_VShapeAcc(0.0, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity);
 			if (dtStep2->_tcurr + calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
 				+ calcDT_VShapeAcc(0.0, alow, 0.0, dtStep2->_maxJerk) >= dtStep2->_tsync)
 				return true;
@@ -247,14 +703,15 @@ namespace irLib
 		bool Decision9_SCurveStep2(TreeSCurveStep2 * dtStep2)
 		{
 			cout << " - 09";
-			Real vaftertri = dtStep2->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
-			LOGIF(vaftertri >= dtStep2->_targetVelocity, "wrong1 - Decision9_SCurveStep2");
-			Real taftertri = dtStep2->_tcurr + calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
-			Real alow = calcALow_VShapeAcc(0.0, 0.0, dtStep2->_maxJerk, vaftertri, dtStep2->_targetVelocity);
-			Real hldTime = dtStep2->_tsync - taftertri - calcDT_VShapeAcc(0.0, alow, 0.0, dtStep2->_maxJerk);
+			Real vafterpostri = dtStep2->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(vafterpostri >= dtStep2->_targetVelocity, "wrong1 - Decision9_SCurveStep2");
+			Real tafterpostri = dtStep2->_tcurr + calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real alow = calcALow_VShapeAcc(0.0, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity);
+			Real hldTime = dtStep2->_tsync - tafterpostri - calcDT_VShapeAcc(0.0, alow, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision9_SCurveStep2");
 			if (dtStep2->_currentPosition + calcDP_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
-				+ calcDP_constVel(hldTime, vaftertri)
-				+ calcDP_VShapeAcc(0.0, alow, 0.0, dtStep2->_maxJerk, vaftertri) <= dtStep2->_targetPosition)
+				+ calcDP_constVel(hldTime, vafterpostri)
+				+ calcDP_VShapeAcc(0.0, alow, 0.0, dtStep2->_maxJerk, vafterpostri) <= dtStep2->_targetPosition)
 				return true;
 			return false;
 		}
@@ -295,6 +752,540 @@ namespace irLib
 			if (dtStep2->_currentPosition + calcDP_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
 				+ calcDP_NegTrapezoidAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterbackslash, dtStep2->_targetVelocity)
 				+ calcDP_constVel(dtStep2->_tsync - tafterbackslashandnegtrap, dtStep2->_targetVelocity) >= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+
+		bool Decision13_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 13";
+			Real vafterbackslash = dtStep2->_currentVelocity + calcDV_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(vafterbackslash <= dtStep2->_targetVelocity, "wrong1 - Decision13_SCurveStep2");
+			Real tafterbackslash = dtStep2->_tcurr + calcDT_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk);
+			Real ahigh = calcAHigh_reverseVShapeAcc(0.0, 0.0, dtStep2->_maxJerk, vafterbackslash, dtStep2->_targetVelocity);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_reverseVShapeAcc(0.0, ahigh, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision13_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafterbackslash)
+				+ calcDP_reverseVShapeAcc(0.0, ahigh, 0.0, dtStep2->_maxJerk, vafterbackslash)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision14_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 14";
+			Real vafternegtri = dtStep2->_targetVelocity - calcDV_revesreVShpaeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real alow = calcALow_VShapeAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafternegtri);
+			if (dtStep2->_tcurr
+				+ calcDT_VShapeAcc(dtStep2->_currentAcceleration, alow, 0.0, dtStep2->_maxJerk)
+				+ calcDT_reverseVShapeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				>= dtStep2->_tsync)
+				return true;
+			return false;
+		}
+
+		bool Decision15_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 15";
+			Real vafternegtri = dtStep2->_targetVelocity - calcDV_revesreVShpaeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real alow = calcALow_VShapeAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafternegtri);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_VShapeAcc(dtStep2->_currentAcceleration, alow, 0.0, dtStep2->_maxJerk)
+				- calcDT_reverseVShapeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision15_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_VShapeAcc(dtStep2->_currentAcceleration, alow, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafternegtri)
+				+ calcDP_reverseVShapeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafternegtri)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision16_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 16";
+			Real vafternegtri = dtStep2->_currentVelocity + calcDV_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			if (dtStep2->_tcurr
+				+ calcDT_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				+ calcDT_TrapezoidAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafternegtri, dtStep2->_targetVelocity)
+				>= dtStep2->_tsync)
+				return true;
+			return false;
+		}
+
+		bool Decision17_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 17";
+			Real vafternegtri = dtStep2->_currentVelocity + calcDV_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_TrapezoidAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafternegtri, dtStep2->_targetVelocity);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision17_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafternegtri)
+				+ calcDP_TrapezoidAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafternegtri, dtStep2->_targetVelocity)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision18_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 18";
+			//Real vafterbackslash = dtStep2->_currentVelocity + calcDV_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk);
+			//LOGIF(vafterbackslash <= dtStep2->_targetVelocity, "wrong1 - Decision18_SCurveStep2");
+			if (dtStep2->_currentVelocity
+				+ calcDV_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk)
+				+ calcDV_revesreVShpaeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				<= dtStep2->_targetVelocity)
+				return true;
+			return false;
+		}
+
+		bool Decision19_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 19";
+			Real vafterbackslash = dtStep2->_currentVelocity + calcDV_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_TrapezoidAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterbackslash, dtStep2->_targetVelocity);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision19_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafterbackslash)
+				+ calcDP_TrapezoidAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterbackslash, dtStep2->_targetVelocity)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision20_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 20";
+			if (dtStep2->_currentVelocity
+				+ calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				+ calcDV_revesreVShpaeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				<= dtStep2->_targetVelocity)
+				return true;
+			return false;
+		}
+
+		bool Decision21_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 21";
+			Real vafterpostri = dtStep2->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_TrapezoidAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision21_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafterpostri)
+				+ calcDP_TrapezoidAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision22_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 22";
+			Real vafterpostrap = dtStep2->_targetVelocity - dtStep2->_currentVelocity - calcDV_revesreVShpaeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafterpostrap);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision22_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafterpostrap)
+				+ calcDP_constVel(hldTime, vafterpostrap)
+				+ calcDP_reverseVShapeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterpostrap)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision23_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 23";
+			Real vafterpostri = dtStep2->_targetVelocity - calcDV_revesreVShpaeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real ahigh = calcAHigh_reverseVShapeAcc(0.0, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafterpostri);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, ahigh, 0.0, dtStep2->_maxJerk)
+				- calcDT_reverseVShapeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision23_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_reverseVShapeAcc(dtStep2->_currentAcceleration, ahigh, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafterpostri)
+				+ calcDP_reverseVShapeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterpostri)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision24_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 24";
+			Real vafterpostri = dtStep2->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real ahigh = calcAHigh_reverseVShapeAcc(0.0, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_reverseVShapeAcc(0.0, ahigh, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision24_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafterpostri)
+				+ calcDP_reverseVShapeAcc(0.0, ahigh, 0.0, dtStep2->_maxJerk, vafterpostri)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision25_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 25 (same as 13)";
+			return Decision13_SCurveStep2(dtStep2);
+		}
+
+		bool Decision26_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 26";
+			Real vafterpostri = dtStep2->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real ahigh = calcAHigh_reverseVShapeAcc(0.0, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_reverseVShapeAcc(0.0, ahigh, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision26_SCurveStep2");
+			if (dtStep2->_targetPosition
+				+ calcDP_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafterpostri)
+				+ calcDP_reverseVShapeAcc(0.0, ahigh, 0.0, dtStep2->_maxJerk, vafterpostri)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision27_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 27";
+			Real vafterbackslash = dtStep2->_currentVelocity + calcDV_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(vafterbackslash >= dtStep2->_targetVelocity, "wrong1 - Decision27_SCurveStep2");
+			Real alow = calcALow_VShapeAcc(0.0, 0.0, dtStep2->_maxJerk, vafterbackslash, dtStep2->_targetVelocity);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_VShapeAcc(0.0, alow, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision27_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafterbackslash)
+				+ calcDP_VShapeAcc(0.0, alow, 0.0, dtStep2->_maxJerk, vafterbackslash)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision28_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 28";
+			if (dtStep2->_currentVelocity
+				+ calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				+ calcDV_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				<= dtStep2->_targetVelocity)
+				return true;
+			return false;
+		}
+
+		bool Decision29_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 29";
+			Real vafterpostrap = dtStep2->_targetVelocity - calcDV_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			if (dtStep2->_tcurr
+				+ calcDT_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafterpostrap)
+				+ calcDT_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				>= dtStep2->_tsync)
+				return true;
+			return false;
+		}
+
+		bool Decision30_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 30";
+			Real vafterpostri = dtStep2->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real alow = calcALow_VShapeAcc(0.0, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity);
+			if (dtStep2->_tcurr
+				+ calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				+ calcDT_VShapeAcc(0.0, alow, 0.0, dtStep2->_maxJerk)
+				>= dtStep2->_tsync)
+				return true;
+			return false;
+		}
+
+		bool Decision31_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 31";
+			Real vafterpostri = dtStep2->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real alow = calcALow_VShapeAcc(0.0, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_reverseVShapeAcc(dtStep2->_maxAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_VShapeAcc(0.0, alow, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision31_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafterpostri)
+				+ calcDP_VShapeAcc(0.0, alow, 0.0, dtStep2->_maxJerk, vafterpostri)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision32_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 32";
+			Real vafterpostrap = dtStep2->_targetVelocity - calcDV_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr
+				- calcDT_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafterpostrap)
+				- calcDT_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision32_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_TrapezoidAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafterpostrap)
+				+ calcDP_constVel(hldTime, vafterpostrap)
+				+ calcDP_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterpostrap)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision33_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 33";
+			Real vafterpostri = dtStep2->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			if (dtStep2->_tcurr
+				+ calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				+ calcDT_NegTrapezoidAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity)
+				>= dtStep2->_tsync)
+				return true;
+			return false;
+		}
+
+		bool Decision34_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 34";
+			Real ahigh = calcAHigh_reverseVShapeAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity,
+				dtStep2->_targetVelocity - calcDV_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk));
+			if (dtStep2->_tcurr
+				+ calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, ahigh, 0.0, dtStep2->_maxJerk)
+				+ calcDT_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				>= dtStep2->_tsync)
+				return true;
+			return false;
+		}
+
+		bool Decision35_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 35";
+			Real vafterpostri = dtStep2->_targetVelocity - calcDV_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real ahigh = calcAHigh_reverseVShapeAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafterpostri);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, ahigh, 0.0, dtStep2->_maxJerk)
+				- calcDT_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision35_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_reverseVShapeAcc(dtStep2->_currentAcceleration, ahigh, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafterpostri)
+				+ calcDP_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterpostri)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision36_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 36";
+			Real vafterpostri = dtStep2->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_NegTrapezoidAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision36_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafterpostri)
+				+ calcDP_NegTrapezoidAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision37_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 37";
+			Real vafternegtrap = dtStep2->_targetVelocity - calcDV_revesreVShpaeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			if (dtStep2->_tcurr
+				+ calcDT_NegTrapezoidAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafternegtrap)
+				+ calcDT_reverseVShapeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				>= dtStep2->_tsync)
+				return true;
+			return false;
+		}
+
+		bool Decision38_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 38";
+			Real vafternegtri = dtStep2->_currentVelocity + calcDV_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real ahigh = calcAHigh_reverseVShapeAcc(0.0, 0.0, dtStep2->_maxJerk, vafternegtri, dtStep2->_targetVelocity);
+			if (dtStep2->_tcurr
+				+ calcDT_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				+ calcDT_reverseVShapeAcc(0.0, ahigh, 0.0, dtStep2->_maxJerk)
+				>= dtStep2->_tsync)
+				return true;
+			return false;
+		}
+
+		bool Decision39_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 39";
+			Real vafternegtri = dtStep2->_currentVelocity + calcDV_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real ahigh = calcAHigh_reverseVShapeAcc(0.0, 0.0, dtStep2->_maxJerk, vafternegtri, dtStep2->_targetVelocity);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_reverseVShapeAcc(0.0, ahigh, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision39_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafternegtri)
+				+ calcDP_reverseVShapeAcc(0.0, ahigh, 0.0, dtStep2->_maxJerk, vafternegtri)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision40_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 40";
+			Real vafternegtrap = dtStep2->_targetVelocity - calcDV_revesreVShpaeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr
+				- calcDT_NegTrapezoidAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafternegtrap)
+				- calcDT_reverseVShapeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision40_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_NegTrapezoidAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafternegtrap)
+				+ calcDP_constVel(hldTime, vafternegtrap)
+				+ calcDP_reverseVShapeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafternegtrap)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision41_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 41";
+			Real vafterbackslash = dtStep2->_currentVelocity + calcDV_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_NegTrapezoidAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterbackslash, dtStep2->_targetVelocity);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision41_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafterbackslash)
+				+ calcDP_NegTrapezoidAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterbackslash, dtStep2->_targetVelocity)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision42_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 42";
+			if (dtStep2->_currentVelocity
+				+ calcDV_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				+ calcDV_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				<= dtStep2->_targetVelocity)
+				return true;
+			return false;
+		}
+
+		bool Decision43_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 43";
+			Real vafternegtri = dtStep2->_targetVelocity - calcDV_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real alow = calcALow_VShapeAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafternegtri);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_VShapeAcc(dtStep2->_currentAcceleration, alow, 0.0, dtStep2->_maxJerk)
+				- calcDT_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision43_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_VShapeAcc(dtStep2->_currentAcceleration, alow, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafternegtri)
+				+ calcDP_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafternegtri)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision44_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 44";
+			Real vafternegtri = dtStep2->_currentVelocity + calcDV_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real alow = calcALow_VShapeAcc(0.0, 0.0, dtStep2->_maxJerk, vafternegtri, dtStep2->_targetVelocity);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_VShapeAcc(0.0, alow, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision44_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafternegtri)
+				+ calcDP_VShapeAcc(0.0, alow, 0.0, dtStep2->_maxJerk, vafternegtri)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision45_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 45";
+			Real vafternegtri = dtStep2->_currentVelocity + calcDV_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_NegTrapezoidAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafternegtri, dtStep2->_targetVelocity);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision45_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_VShapeAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafternegtri)
+				+ calcDP_NegTrapezoidAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafternegtri, dtStep2->_targetVelocity)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision46_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 46";
+			Real vafternegtrap = dtStep2->_targetVelocity - calcDV_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr
+				- calcDT_NegTrapezoidAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafternegtrap)
+				- calcDT_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision46_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_NegTrapezoidAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafternegtrap)
+				+ calcDP_constVel(hldTime, vafternegtrap)
+				+ calcDP_VShapeAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafternegtrap)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
+
+		bool Decision47_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 47";
+			Real vafternegtrap = dtStep2->_targetVelocity - calcDV_revesreVShpaeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			if (dtStep2->_tcurr
+				+ calcDT_NegTrapezoidAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafternegtrap)
+				+ calcDT_reverseVShapeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				>= dtStep2->_tsync)
+				return true;
+			return false;
+		}
+
+		bool Decision48_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 48";
+			Real vafternegtrap = dtStep2->_targetVelocity - calcDV_revesreVShpaeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr
+				- calcDT_NegTrapezoidAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafternegtrap)
+				- calcDT_reverseVShapeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision48_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_NegTrapezoidAcc(dtStep2->_currentAcceleration, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity, vafternegtrap)
+				+ calcDP_constVel(hldTime, vafternegtrap)
+				+ calcDP_reverseVShapeAcc(0.0, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafternegtrap)
+				<= dtStep2->_targetPosition)
 				return true;
 			return false;
 		}

@@ -38,6 +38,7 @@ namespace irLib
 
 		Real calcDV_BackSlashAcc(Real ai, Real af, Real jmax);
 		Real calcDP_BackSlashAcc(Real ai, Real af, Real jmax, Real vi);
+		Real calcDT_BackSlashAcc(Real ai, Real af, Real jmax);
 
 		Real calcDV_revesreVShpaeAcc(Real ai, Real ahigh, Real af, Real jmax);
 		Real calcDP_reverseVShapeAcc(Real ai, Real ahigh, Real af, Real jmax, Real vi);

@@ -61,8 +61,14 @@ namespace irLib
 		Real calcDP_BackSlashAcc(Real ai, Real af, Real jmax, Real vi)
 		{
 			// ai > af
-			Real tmpt = (ai - af) / jmax;
+			Real tmpt = calcDT_BackSlashAcc(ai, af, jmax);
 			return (-jmax*tmpt*tmpt*tmpt / 6 + ai*tmpt*tmpt / 2 + vi*tmpt);
+		}
+
+		Real calcDT_BackSlashAcc(Real ai, Real af, Real jmax)
+		{
+			// ai > af
+			return (ai - af) / jmax;
 		}
 
 		Real calcDT_BackSlashAcc(Real ai, Real af, Real jmax)

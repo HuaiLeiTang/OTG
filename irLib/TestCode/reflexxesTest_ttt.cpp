@@ -46,26 +46,27 @@ int main()
 	// variables for step 1 / step 2 test
 	Real maxVel, maxAcc, maxJer, curPos, curVel, curAcc, tarPos, tarVel, curTime;
 
-	//int jointIdx = 0;
-	//maxVel = robot->getJointPtr(jointIdx)->getLimitVelUpper();
-	//maxAcc = robot->getJointPtr(jointIdx)->getLimitAccUpper();
-	//maxJer = robot->getJointPtr(jointIdx)->getLimitJerkUpper();
-	//curPos = makeRandLU(robot->getJointPtr(jointIdx)->getLimitPosLower(), robot->getJointPtr(jointIdx)->getLimitPosUpper());
-	//curVel = makeRandLU(robot->getJointPtr(jointIdx)->getLimitVelLower(), robot->getJointPtr(jointIdx)->getLimitVelUpper());
+	int jointIdx = 0;
+	maxVel = robot->getJointPtr(jointIdx)->getLimitVelUpper();
+	maxAcc = robot->getJointPtr(jointIdx)->getLimitAccUpper();
+	maxJer = robot->getJointPtr(jointIdx)->getLimitJerkUpper();
+	curPos = makeRandLU(robot->getJointPtr(jointIdx)->getLimitPosLower(), robot->getJointPtr(jointIdx)->getLimitPosUpper());
+	curVel = makeRandLU(robot->getJointPtr(jointIdx)->getLimitVelLower(), robot->getJointPtr(jointIdx)->getLimitVelUpper());
 	//curAcc = makeRandLU(/*robot->getJointPtr(jointIdx)->getLimitAccLower()*/0.0, robot->getJointPtr(jointIdx)->getLimitAccUpper());
-	//tarPos = makeRandLU(robot->getJointPtr(jointIdx)->getLimitPosLower(), robot->getJointPtr(jointIdx)->getLimitPosUpper());
-	//tarVel = makeRandLU(robot->getJointPtr(jointIdx)->getLimitVelLower(), robot->getJointPtr(jointIdx)->getLimitVelUpper());
-	//curTime = 0.0;
-
-	curVel = 20.0;
-	maxVel = curVel + 13.75;
-	maxAcc = 10.0;
-	maxJer = 10.0;
-	curPos = 0.0;
-	curAcc = 5.0;
-	tarPos = curVel * 3.5 + 35.4176;
-	tarVel = curVel + 11.25;
+	curAcc = makeRandLU(robot->getJointPtr(jointIdx)->getLimitAccLower(), robot->getJointPtr(jointIdx)->getLimitAccUpper());
+	tarPos = makeRandLU(robot->getJointPtr(jointIdx)->getLimitPosLower(), robot->getJointPtr(jointIdx)->getLimitPosUpper());
+	tarVel = makeRandLU(robot->getJointPtr(jointIdx)->getLimitVelLower(), robot->getJointPtr(jointIdx)->getLimitVelUpper());
 	curTime = 0.0;
+
+	//curVel = 20.0;
+	//maxVel = curVel + 13.75;
+	//maxAcc = 10.0;
+	//maxJer = 10.0;
+	//curPos = 0.0;
+	//curAcc = 5.0;
+	//tarPos = curVel * 3.5 + 35.4176;
+	//tarVel = curVel + 11.25;
+	//curTime = 0.0;
 
 	/////////////////////////////////////////////////////////////////
 	//////////////// test step 1 with random initial ////////////////
