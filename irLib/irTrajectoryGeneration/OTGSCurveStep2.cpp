@@ -21,9 +21,11 @@ namespace irLib
 			tree->_targetVelocity = targetVelocity;
 
 			tree->_tcurr = tcurr;
+			tree->_tcurrNotChanging = tcurr;
 			tree->_tsync = tsync;
 			
 			tree->_bReversed = false;
+			tree->_bAtoZero = false;
 
 			return tree;
 		}
@@ -176,6 +178,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTriZeroPosTri");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTriZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -189,6 +192,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTriZeroPosTri");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTriZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -202,6 +206,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTriZeroPosTrap");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTriZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -215,6 +220,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTriZeroPosTrap");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTriZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -223,6 +229,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTrapZeroPosTrap");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTrapZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -333,6 +340,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTriZeroNegTri");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTriZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -448,6 +456,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTriZeroPosTri");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTriZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -461,6 +470,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTriZeroPosTri");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTriZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -469,6 +479,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTrapZeroPosTri");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTrapZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -482,6 +493,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTrapZeroPosTrap");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTrapZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -509,6 +521,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTriZeroNegTrap");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTriZeroPosTrap_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -522,6 +535,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTriZeroNegTri");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTriZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -530,6 +544,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTrapZeroNegTri");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTrapZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -539,6 +554,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTriZeroNegTrap");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTriZeroPosTrap_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -552,6 +568,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTrapZeroNegTrap");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTrapZeroPosTrap_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -560,6 +577,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTrapZeroNegTri");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTrapZeroPosTri_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -569,6 +587,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTrapZeroPosTri");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTrapZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -582,6 +601,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTrapZeroPosTri");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTrapZeroNegTri_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -590,6 +610,7 @@ namespace irLib
 				LOG(" to do!!!!!!!!!!!!!! - 앞부분 저장 ");
 				LOG(" NegTrapZeroPosTrap");
 				FromAToZero_SCurveStep2(decisionTreeStep2);
+				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTrapZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
@@ -606,6 +627,18 @@ namespace irLib
 			dtStep2->_currentPosition += calcDP_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity);
 			dtStep2->_currentVelocity += calcDV_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk);
 			dtStep2->_currentAcceleration = 0.0;
+
+			dtStep2->_bAtoZero = true;
+		}
+
+		void FromZeroToA_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			// restore function of 'FromAToZero_SCurveStep1'
+			LOGIF(dtStep2->_tcurr - dtStep2->_tcurrNotChanging >= 0.0, "delta time must be larger than zero - 'FromZeroToA_SCurveStep1'");
+			dtStep2->_currentAcceleration = dtStep2->_maxJerk * (dtStep2->_tcurr - dtStep2->_tcurrNotChanging);
+			dtStep2->_currentVelocity -= calcDV_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk);
+			dtStep2->_currentPosition -= calcDP_BackSlashAcc(dtStep2->_currentAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity);
+			dtStep2->_tcurr = dtStep2->_tcurrNotChanging;
 		}
 
 		void ReverseSign_SCurveStep2(TreeSCurveStep2 * dtStep2)
@@ -1370,12 +1403,28 @@ namespace irLib
 				}
 			}
 
-			calcProfile_Slash(decisionTreeStep2, profile, ap1, t12); // time interval t12
-			calcProfile_BackSlash(decisionTreeStep2, profile, 0, t23); // time interval t23
-			calcProfile_Rectangular(decisionTreeStep2, profile, 0, t34); // time interval t34
-			calcProfile_BackSlash(decisionTreeStep2, profile, ap2, t45); // time interval t45
-			calcProfile_Slash(decisionTreeStep2, profile, 0, t56); // time interval t56
-			calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			if (!decisionTreeStep2->_bAtoZero)
+			{
+				calcProfile_Slash(decisionTreeStep2, profile, ap1, t12); // time interval t12
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t23); // time interval t23
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_BackSlash(decisionTreeStep2, profile, ap2, t45); // time interval t45
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t56); // time interval t56
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
+			else
+			{
+				ReverseSign_SCurveStep2(decisionTreeStep2);
+				FromZeroToA_SCurveStep2(decisionTreeStep2);
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0.0, decisionTreeStep2->_currentAcceleration / decisionTreeStep2->_maxJerk);
+
+				calcProfile_BackSlash(decisionTreeStep2, profile, -ap1, t12);
+				calcProfile_Slash(decisionTreeStep2, profile, 0.0, t23);
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0.0, t34);
+				calcProfile_Slash(decisionTreeStep2, profile, -ap2, t45);
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0.0, t56);
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
 		}
 
 		void calculateProfile_PosTrapZeroNegTri_SCurveStep2(TreeSCurveStep2* decisionTreeStep2, Profile* profile/*, const bool reverse*/) // (case 2) closed-form solution
@@ -1418,14 +1467,31 @@ namespace irLib
 			t34 = decisionTreeStep2->_maxAcceleration / decisionTreeStep2->_maxJerk;
 			t56 = -ap2 / decisionTreeStep2->_maxJerk;
 			t67 = t56;
-			
-			calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t12); // time interval t12
-			calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t23); // time interval t23
-			calcProfile_BackSlash(decisionTreeStep2, profile, 0, t34); // time interval t34
-			calcProfile_Rectangular(decisionTreeStep2, profile, 0, t45); // time interval t45
-			calcProfile_BackSlash(decisionTreeStep2, profile, ap2, t56); // time interval t56
-			calcProfile_Slash(decisionTreeStep2, profile, 0, t67); // time interval t67
-			calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+
+			if (!decisionTreeStep2->_bAtoZero)
+			{
+				calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t12); // time interval t12
+				calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t23); // time interval t23
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t45); // time interval t45
+				calcProfile_BackSlash(decisionTreeStep2, profile, ap2, t56); // time interval t56
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t67); // time interval t67
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
+			else
+			{
+				ReverseSign_SCurveStep2(decisionTreeStep2);
+				FromZeroToA_SCurveStep2(decisionTreeStep2);
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0.0, decisionTreeStep2->_currentAcceleration / decisionTreeStep2->_maxJerk);
+
+				calcProfile_BackSlash(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t12); // time interval t12
+				calcProfile_Rectangular(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t23); // time interval t23
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t45); // time interval t45
+				calcProfile_Slash(decisionTreeStep2, profile, -ap2, t56); // time interval t56
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t67); // time interval t67
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
 		}
 
 		void calculateProfile_PosTrapZeroNegTrap_SCurveStep2(TreeSCurveStep2* decisionTreeStep2, Profile* profile/*, const bool reverse*/) // (case 3) closed-form solution
@@ -1447,14 +1513,33 @@ namespace irLib
 			t56 = t34; t78 = t56;
 			t45 = tsyn - t12 - t23 - t34 - t56 - t67 - t78;
 
-			calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t12); // time interval t12
-			calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t23); // time interval t23
-			calcProfile_BackSlash(decisionTreeStep2, profile, 0, t34); // time interval t34
-			calcProfile_Rectangular(decisionTreeStep2, profile, 0, t45); // time interval t45
-			calcProfile_BackSlash(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t56); // time interval t56
-			calcProfile_Rectangular(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t67); // time interval t67
-			calcProfile_Slash(decisionTreeStep2, profile, 0, t78); // time interval t78
-			calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+
+			if (!decisionTreeStep2->_bAtoZero)
+			{
+				calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t12); // time interval t12
+				calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t23); // time interval t23
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t45); // time interval t45
+				calcProfile_BackSlash(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t56); // time interval t56
+				calcProfile_Rectangular(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t67); // time interval t67
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t78); // time interval t78
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
+			else
+			{
+				ReverseSign_SCurveStep2(decisionTreeStep2);
+				FromZeroToA_SCurveStep2(decisionTreeStep2);
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0.0, decisionTreeStep2->_currentAcceleration / decisionTreeStep2->_maxJerk);
+
+				calcProfile_BackSlash(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t12); // time interval t12
+				calcProfile_Rectangular(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t23); // time interval t23
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t45); // time interval t45
+				calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t56); // time interval t56
+				calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t67); // time interval t67
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t78); // time interval t78
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
 		}
 
 		void calculateProfile_PosTriZeroNegTrap_SCurveStep2(TreeSCurveStep2* decisionTreeStep2, Profile* profile/*, const bool reverse*/) // (case 4) closed-form solution
@@ -1496,14 +1581,30 @@ namespace irLib
 			t45 = amax / jmax;
 			t67 = t45;
 
-			// Compute polynomial for the time interval t12
-			calcProfile_Slash(decisionTreeStep2, profile, ap1, t12); // time interval t12
-			calcProfile_BackSlash(decisionTreeStep2, profile, 0, t23); // time interval t23
-			calcProfile_Rectangular(decisionTreeStep2, profile, 0, t34); // time interval t34
-			calcProfile_BackSlash(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t45); // time interval t45
-			calcProfile_Rectangular(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t56); // time interval t56
-			calcProfile_Slash(decisionTreeStep2, profile, 0, t67); // time interval t67
-			calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			if (!decisionTreeStep2->_bAtoZero)
+			{
+				calcProfile_Slash(decisionTreeStep2, profile, ap1, t12); // time interval t12
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t23); // time interval t23
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_BackSlash(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t45); // time interval t45
+				calcProfile_Rectangular(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t56); // time interval t56
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t67); // time interval t67
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
+			else
+			{
+				ReverseSign_SCurveStep2(decisionTreeStep2);
+				FromZeroToA_SCurveStep2(decisionTreeStep2);
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0.0, decisionTreeStep2->_currentAcceleration / decisionTreeStep2->_maxJerk);
+
+				calcProfile_BackSlash(decisionTreeStep2, profile, -ap1, t12); // time interval t12
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t23); // time interval t23
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t45); // time interval t45
+				calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t56); // time interval t56
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t67); // time interval t67
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
 		}
 
 		void calculateProfile_PosTrapZeroPosTrap_SCurveStep2(TreeSCurveStep2* decisionTreeStep2, Profile* profile/*, const bool reverse*/) // (case 5) closed-form solution
@@ -1529,14 +1630,33 @@ namespace irLib
 			t56 = t34;
 			t78 = t56;
 
-			calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t12); // time interval t12
-			calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t23); // time interval t23
-			calcProfile_BackSlash(decisionTreeStep2, profile, 0, t34); // time interval t34
-			calcProfile_Rectangular(decisionTreeStep2, profile, 0, t45); // time interval t45
-			calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t56); // time interval t56
-			calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t67); // time interval t67
-			calcProfile_BackSlash(decisionTreeStep2, profile, 0, t78); // time interval t78
-			calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+
+			if (!decisionTreeStep2->_bAtoZero)
+			{
+				calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t12); // time interval t12
+				calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t23); // time interval t23
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t45); // time interval t45
+				calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t56); // time interval t56
+				calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t67); // time interval t67
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t78); // time interval t78
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
+			else
+			{
+				ReverseSign_SCurveStep2(decisionTreeStep2);
+				FromZeroToA_SCurveStep2(decisionTreeStep2);
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0.0, decisionTreeStep2->_currentAcceleration / decisionTreeStep2->_maxJerk);
+
+				calcProfile_BackSlash(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t12); // time interval t12
+				calcProfile_Rectangular(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t23); // time interval t23
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t45); // time interval t45
+				calcProfile_BackSlash(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t56); // time interval t56
+				calcProfile_Rectangular(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t67); // time interval t67
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t78); // time interval t78
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
 		}
 
 		void calculateProfile_PosTrapZeroPosTri_SCurveStep2(TreeSCurveStep2* decisionTreeStep2, Profile* profile/*, const bool reverse*/) // (case 6) closed-form solution
@@ -1579,13 +1699,30 @@ namespace irLib
 			t56 = ap1 / jmax;
 			t67 = t56;
 
-			calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t12); // time interval t12
-			calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t23); // time interval t23
-			calcProfile_BackSlash(decisionTreeStep2, profile, 0, t34); // time interval t34
-			calcProfile_Rectangular(decisionTreeStep2, profile, 0, t45); // time interval t45
-			calcProfile_Slash(decisionTreeStep2, profile, ap1, t56); // time interval t56
-			calcProfile_BackSlash(decisionTreeStep2, profile, 0, t67); // time interval t67
-			calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			if (!decisionTreeStep2->_bAtoZero)
+			{
+				calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t12); // time interval t12
+				calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t23); // time interval t23
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t45); // time interval t45
+				calcProfile_Slash(decisionTreeStep2, profile, ap1, t56); // time interval t56
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t67); // time interval t67
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
+			else
+			{
+				ReverseSign_SCurveStep2(decisionTreeStep2);
+				FromZeroToA_SCurveStep2(decisionTreeStep2);
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0.0, decisionTreeStep2->_currentAcceleration / decisionTreeStep2->_maxJerk);
+
+				calcProfile_BackSlash(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t12); // time interval t12
+				calcProfile_Rectangular(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t23); // time interval t23
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t45); // time interval t45
+				calcProfile_BackSlash(decisionTreeStep2, profile, -ap1, t56); // time interval t56
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t67); // time interval t67
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
 		}
 
 		void calculateProfile_PosTriZeroPosTrap_SCurveStep2(TreeSCurveStep2* decisionTreeStep2, Profile* profile/*, const bool reverse*/) // (case 7) closed-form solution
@@ -1629,13 +1766,30 @@ namespace irLib
 			t45 = amax / jmax;
 			t67 = t45;
 
-			calcProfile_Slash(decisionTreeStep2, profile, ap1, t12); // time interval t12
-			calcProfile_BackSlash(decisionTreeStep2, profile, 0, t23); // time interval t23
-			calcProfile_Rectangular(decisionTreeStep2, profile, 0, t34); // time interval t34
-			calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t45); // time interval t45
-			calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t56); // time interval t56
-			calcProfile_BackSlash(decisionTreeStep2, profile, 0, t67); // time interval t67
-			calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			if (!decisionTreeStep2->_bAtoZero)
+			{
+				calcProfile_Slash(decisionTreeStep2, profile, ap1, t12); // time interval t12
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t23); // time interval t23
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_Slash(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t45); // time interval t45
+				calcProfile_Rectangular(decisionTreeStep2, profile, decisionTreeStep2->_maxAcceleration, t56); // time interval t56
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t67); // time interval t67
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
+			else
+			{
+				ReverseSign_SCurveStep2(decisionTreeStep2);
+				FromZeroToA_SCurveStep2(decisionTreeStep2);
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0.0, decisionTreeStep2->_currentAcceleration / decisionTreeStep2->_maxJerk);
+
+				calcProfile_BackSlash(decisionTreeStep2, profile, -ap1, t12); // time interval t12
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t23); // time interval t23
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_BackSlash(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t45); // time interval t45
+				calcProfile_Rectangular(decisionTreeStep2, profile, -decisionTreeStep2->_maxAcceleration, t56); // time interval t56
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t67); // time interval t67
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
 		}
 
 		void calculateProfile_PosTriZeroPosTri_SCurveStep2(TreeSCurveStep2* decisionTreeStep2, Profile* profile/*, const bool reverse*/) // (case 8) numerical solution 
@@ -1673,12 +1827,28 @@ namespace irLib
 				X(1) = makeRandLU(0, decisionTreeStep2->_maxAcceleration);
 			}
 
-			calcProfile_Slash(decisionTreeStep2, profile, ap1, t12); // time interval t12
-			calcProfile_BackSlash(decisionTreeStep2, profile, 0, t23); // time interval t23
-			calcProfile_Rectangular(decisionTreeStep2, profile, 0, t34); // time interval t34
-			calcProfile_Slash(decisionTreeStep2, profile, ap2, t45); // time interval t45
-			calcProfile_BackSlash(decisionTreeStep2, profile, 0, t56); // time interval t56
-			calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			if (!decisionTreeStep2->_bAtoZero)
+			{
+				calcProfile_Slash(decisionTreeStep2, profile, ap1, t12); // time interval t12
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t23); // time interval t23
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_Slash(decisionTreeStep2, profile, ap2, t45); // time interval t45
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0, t56); // time interval t56
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
+			else
+			{
+				ReverseSign_SCurveStep2(decisionTreeStep2);
+				FromZeroToA_SCurveStep2(decisionTreeStep2);
+				calcProfile_BackSlash(decisionTreeStep2, profile, 0.0, decisionTreeStep2->_currentAcceleration / decisionTreeStep2->_maxJerk);
+
+				calcProfile_BackSlash(decisionTreeStep2, profile, -ap1, t12); // time interval t12
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t23); // time interval t23
+				calcProfile_Rectangular(decisionTreeStep2, profile, 0, t34); // time interval t34
+				calcProfile_BackSlash(decisionTreeStep2, profile, -ap2, t45); // time interval t45
+				calcProfile_Slash(decisionTreeStep2, profile, 0, t56); // time interval t56
+				calcProfile_Aftertsync(decisionTreeStep2, profile); // after sychronization time
+			}
 		}
 
 
@@ -1720,7 +1890,7 @@ namespace irLib
 
 		void substitutefcn(TreeSCurveStep2* decisionTreeStep2, Real& tsyn, Real& a0, Real& vt, Real& v0, Real& pt, Real& p0, Real& jmax, Real& amax, Real& vmax)
 		{
-			tsyn = decisionTreeStep2->_tsync;
+			tsyn = decisionTreeStep2->_tsync - decisionTreeStep2->_tcurr;
 			a0 = decisionTreeStep2->_currentAcceleration;
 			vt = decisionTreeStep2->_targetVelocity;
 			v0 = decisionTreeStep2->_currentVelocity;

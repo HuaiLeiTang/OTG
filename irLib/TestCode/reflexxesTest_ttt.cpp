@@ -21,7 +21,7 @@ using namespace irLib::irMath;
 using namespace irLib::irTG;
 
 std::string filepath_ys = "C:/Users/crazy/Desktop/Time optimization/sCurveTest/";
-std::string filepath = "D:/jkkim/Documents/matlabTest/otg/testSet/step1decisionbox/";
+std::string filepath = "D:/jkkim/Documents/matlabTest/otg/scurve/";
 
 void saveReal1DArray2txt(Real* input, unsigned int size, std::string filename);
 void saveRealArray2txt(Real** input, unsigned int size1, unsigned int size2, std::string filename);
@@ -40,45 +40,42 @@ int main()
 	SerialOpenChainPtr robot = SerialOpenChainPtr(new efortRobot);
 	unsigned int dof = robot->getNumOfJoint();
 
-
-
-
 	// variables for step 1 / step 2 test
-	Real maxVel, maxAcc, maxJer, curPos, curVel, curAcc, tarPos, tarVel, curTime;
+	//Real maxVel, maxAcc, maxJer, curPos, curVel, curAcc, tarPos, tarVel, curTime;
 
-	int jointIdx = 0;
-	maxVel = robot->getJointPtr(jointIdx)->getLimitVelUpper();
-	maxAcc = robot->getJointPtr(jointIdx)->getLimitAccUpper();
-	maxJer = robot->getJointPtr(jointIdx)->getLimitJerkUpper();
-	curPos = makeRandLU(robot->getJointPtr(jointIdx)->getLimitPosLower(), robot->getJointPtr(jointIdx)->getLimitPosUpper());
-	curVel = makeRandLU(robot->getJointPtr(jointIdx)->getLimitVelLower(), robot->getJointPtr(jointIdx)->getLimitVelUpper());
-	//curAcc = makeRandLU(/*robot->getJointPtr(jointIdx)->getLimitAccLower()*/0.0, robot->getJointPtr(jointIdx)->getLimitAccUpper());
-	curAcc = makeRandLU(robot->getJointPtr(jointIdx)->getLimitAccLower(), robot->getJointPtr(jointIdx)->getLimitAccUpper());
-	tarPos = makeRandLU(robot->getJointPtr(jointIdx)->getLimitPosLower(), robot->getJointPtr(jointIdx)->getLimitPosUpper());
-	tarVel = makeRandLU(robot->getJointPtr(jointIdx)->getLimitVelLower(), robot->getJointPtr(jointIdx)->getLimitVelUpper());
-	curTime = 0.0;
+	//int jointIdx = 0;
+	//maxVel = robot->getJointPtr(jointIdx)->getLimitVelUpper();
+	//maxAcc = robot->getJointPtr(jointIdx)->getLimitAccUpper();
+	//maxJer = robot->getJointPtr(jointIdx)->getLimitJerkUpper();
+	//curPos = makeRandLU(robot->getJointPtr(jointIdx)->getLimitPosLower(), robot->getJointPtr(jointIdx)->getLimitPosUpper());
+	//curVel = makeRandLU(robot->getJointPtr(jointIdx)->getLimitVelLower(), robot->getJointPtr(jointIdx)->getLimitVelUpper());
+	////curAcc = makeRandLU(/*robot->getJointPtr(jointIdx)->getLimitAccLower()*/0.0, robot->getJointPtr(jointIdx)->getLimitAccUpper());
+	//curAcc = makeRandLU(robot->getJointPtr(jointIdx)->getLimitAccLower(), robot->getJointPtr(jointIdx)->getLimitAccUpper());
+	//tarPos = makeRandLU(robot->getJointPtr(jointIdx)->getLimitPosLower(), robot->getJointPtr(jointIdx)->getLimitPosUpper());
+	//tarVel = makeRandLU(robot->getJointPtr(jointIdx)->getLimitVelLower(), robot->getJointPtr(jointIdx)->getLimitVelUpper());
+	//curTime = 0.0;
 
-	//curVel = 20.0;
-	//maxVel = curVel + 13.75;
-	//maxAcc = 10.0;
-	//maxJer = 10.0;
-	//curPos = 0.0;
-	//curAcc = 5.0;
-	//tarPos = curVel * 3.5 + 35.4176;
-	//tarVel = curVel + 11.25;
+	//curVel = -335;
+	//maxVel = 985;
+	//maxAcc = 972;
+	//maxJer = 324;
+	//curPos = -499;
+	//curAcc = 152;
+	//tarPos = -90;
+	//tarVel = -347;
 	//curTime = 0.0;
 
 	/////////////////////////////////////////////////////////////////
 	//////////////// test step 1 with random initial ////////////////
 
-	TreeSCurveStep1 * decisionTreeStep1 = makeDecisionTreeSCurveStep1(maxVel, maxAcc, maxJer, curPos, curVel, curAcc, tarPos, tarVel, curTime);
-	//calculateMinimumTimeAndInoperTimeSCurve(decisionTreeStep1);
-	//cout << "minimum time: " << decisionTreeStep1->_tmin << endl;
-	//cout << "decision box 1 result: " << Decision1_SCurveStep1(decisionTreeStep1) << endl; // test decision box...
+	//TreeSCurveStep1 * decisionTreeStep1 = makeDecisionTreeSCurveStep1(maxVel, maxAcc, maxJer, curPos, curVel, curAcc, tarPos, tarVel, curTime);
+	////calculateMinimumTimeAndInoperTimeSCurve(decisionTreeStep1);
+	////cout << "minimum time: " << decisionTreeStep1->_tmin << endl;
+	////cout << "decision box 1 result: " << Decision1_SCurveStep1(decisionTreeStep1) << endl; // test decision box...
 
-	calculateMinimumTimeAndInoperTimeSCurve(decisionTreeStep1);
-	cout << endl << "minimum time: " << decisionTreeStep1->_tmin << endl;
-	deleteDecisionTreeSCurveStep1(decisionTreeStep1);
+	//calculateMinimumTimeAndInoperTimeSCurve(decisionTreeStep1);
+	//cout << endl << "minimum time: " << decisionTreeStep1->_tmin << endl;
+	//deleteDecisionTreeSCurveStep1(decisionTreeStep1);
 
 	/////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////
@@ -106,103 +103,103 @@ int main()
 	////////////////////////////////////////////////////////////////////////
 	//////////////// test whole process with random initial ////////////////
 
-	//Real* maxPosition = new Real[dof];
-	//Real* maxVelocity = new Real[dof];
-	//Real* maxAcceleration = new Real[dof];
-	//Real* maxJerk = new Real[dof];
-	//Real* currentPosition = new Real[dof];
-	//Real* currentVelocity = new Real[dof];
-	//Real* currentAcceleration = new Real[dof];
-	//Real* targetPosition = new Real[dof];
-	//Real* targetVelocity = new Real[dof];
-	//Real* currTime = new Real[dof];
+	Real* maxPosition = new Real[dof];
+	Real* maxVelocity = new Real[dof];
+	Real* maxAcceleration = new Real[dof];
+	Real* maxJerk = new Real[dof];
+	Real* currentPosition = new Real[dof];
+	Real* currentVelocity = new Real[dof];
+	Real* currentAcceleration = new Real[dof];
+	Real* targetPosition = new Real[dof];
+	Real* targetVelocity = new Real[dof];
+	Real* currTime = new Real[dof];
 
-	//for (unsigned int i = 0; i < dof; i++)
-	//{
-	//	maxPosition[i] = robot->getJointPtr(i)->getLimitPosUpper();
-	//	maxVelocity[i] = robot->getJointPtr(i)->getLimitVelUpper();
-	//	maxAcceleration[i] = robot->getJointPtr(i)->getLimitAccUpper();
-	//	maxJerk[i] = robot->getJointPtr(i)->getLimitJerkUpper();
+	for (unsigned int i = 0; i < dof; i++)
+	{
+		maxPosition[i] = robot->getJointPtr(i)->getLimitPosUpper();
+		maxVelocity[i] = robot->getJointPtr(i)->getLimitVelUpper();
+		maxAcceleration[i] = robot->getJointPtr(i)->getLimitAccUpper();
+		maxJerk[i] = robot->getJointPtr(i)->getLimitJerkUpper();
 
-	//	currentPosition[i] = makeRandLU(-maxPosition[i], maxPosition[i]);
-	//	currentVelocity[i] = makeRandLU(-0.8*maxVelocity[i], 0.8 * maxVelocity[i]);
-	//	currentAcceleration[i] = makeRandLU(0.0, maxAcceleration[i]);
+		currentPosition[i] = makeRandLU(-maxPosition[i], maxPosition[i]);
+		currentVelocity[i] = makeRandLU(-0.8*maxVelocity[i], 0.8 * maxVelocity[i]);
+		currentAcceleration[i] = makeRandLU(0.0, maxAcceleration[i]);
 
-	//	targetPosition[i] = makeRandLU(-maxPosition[i], maxPosition[i]);
-	//	targetVelocity[i] = makeRandLU(-maxVelocity[i], maxVelocity[i]);
+		targetPosition[i] = makeRandLU(-maxPosition[i], maxPosition[i]);
+		targetVelocity[i] = makeRandLU(-maxVelocity[i], maxVelocity[i]);
 
-	//	currTime[i] = 0.0;
-	//}
+		currTime[i] = 0.0;
+	}
 
-	//// 랜덤 인풋으로 실험할 때 오류나는 부분 저장해 놨다가 찾아서 디버깅해야 하니까 
-	//// 아래처럼 콘솔창에 출력하든지 txt 파일로 저장하든지 둘 중 하나 해야함
+	// 랜덤 인풋으로 실험할 때 오류나는 부분 저장해 놨다가 찾아서 디버깅해야 하니까 
+	// 아래처럼 콘솔창에 출력하든지 txt 파일로 저장하든지 둘 중 하나 해야함
 
-	////for (unsigned int i = 0; i < dof; i++)
-	////{
-	////	cout << "=== " << i << " ===" << endl;
-	////	cout << "max position: " << maxPosition[i] << endl;
-	////	cout << "max velocity: " << maxVelocity[i] << endl;
-	////	cout << "max acceleration: " << maxAcceleration[i] << endl;
-	////	cout << "max jerk: " << maxJerk[i] << endl;
-	////	cout << endl;
-	////	cout << "cur position: " << currentPosition[i] << endl;
-	////	cout << "cur velocity: " << currentVelocity[i] << endl;
-	////	cout << "cur acceleration: " << currentAcceleration[i] << endl;
-	////	cout << endl;
-	////	cout << "trgt position: " << targetPosition[i] << endl;
-	////	cout << "trgt velocity: " << targetVelocity[i] << endl;
-	////	cout << endl;
-	////}
+	for (unsigned int i = 0; i < dof; i++)
+	{
+		cout << "=== " << i << " ===" << endl;
+		cout << "max position: " << maxPosition[i] << endl;
+		cout << "max velocity: " << maxVelocity[i] << endl;
+		cout << "max acceleration: " << maxAcceleration[i] << endl;
+		cout << "max jerk: " << maxJerk[i] << endl;
+		cout << endl;
+		cout << "cur position: " << currentPosition[i] << endl;
+		cout << "cur velocity: " << currentVelocity[i] << endl;
+		cout << "cur acceleration: " << currentAcceleration[i] << endl;
+		cout << endl;
+		cout << "trgt position: " << targetPosition[i] << endl;
+		cout << "trgt velocity: " << targetVelocity[i] << endl;
+		cout << endl;
+	}
 
-	////saveReal1DArray2txt(maxPosition, dof, filepath + "aaa.txt");
-
-
-	//OTGSCurve * otgSCurve = new OTGSCurve(dof);
-	//otgSCurve->setInputParameters(maxVelocity, maxAcceleration, maxJerk, currentPosition, currentVelocity, currentAcceleration, targetPosition, targetVelocity);
-
-	//unsigned int numOfdata = 5000;
-	//Real** posTraj = new Real*[dof];
-	//Real** velTraj = new Real*[dof];
-	//Real** accTraj = new Real*[dof];
-	//Real** jerTraj = new Real*[dof];
-	//for (unsigned int i = 0; i < dof; i++)
-	//{
-	//	posTraj[i] = new Real[numOfdata];
-	//	velTraj[i] = new Real[numOfdata];
-	//	accTraj[i] = new Real[numOfdata];
-	//	jerTraj[i] = new Real[numOfdata];
-	//}
-
-	//otgSCurve->calculateJointTrajectory(posTraj, velTraj, accTraj, jerTraj, numOfdata);
-
-	//saveRealArray2txt(posTraj, dof, numOfdata, filepath + "position.txt");
-	//saveRealArray2txt(velTraj, dof, numOfdata, filepath + "velocity.txt");
-	//saveRealArray2txt(accTraj, dof, numOfdata, filepath + "acceleration.txt");
-	//saveRealArray2txt(jerTraj, dof, numOfdata, filepath + "jerk.txt");
+	//saveReal1DArray2txt(maxPosition, dof, filepath + "aaa.txt");
 
 
-	//for (unsigned int i = 0; i < dof; i++)
-	//{
-	//	delete[] posTraj[i];
-	//	delete[] velTraj[i];
-	//	delete[] accTraj[i];
-	//	delete[] jerTraj[i];
-	//}
-	//delete[] posTraj;
-	//delete[] velTraj;
-	//delete[] accTraj;
-	//delete[] jerTraj;
+	OTGSCurve * otgSCurve = new OTGSCurve(dof);
+	otgSCurve->setInputParameters(maxVelocity, maxAcceleration, maxJerk, currentPosition, currentVelocity, currentAcceleration, targetPosition, targetVelocity);
+
+	unsigned int numOfdata = 5000;
+	Real** posTraj = new Real*[dof];
+	Real** velTraj = new Real*[dof];
+	Real** accTraj = new Real*[dof];
+	Real** jerTraj = new Real*[dof];
+	for (unsigned int i = 0; i < dof; i++)
+	{
+		posTraj[i] = new Real[numOfdata];
+		velTraj[i] = new Real[numOfdata];
+		accTraj[i] = new Real[numOfdata];
+		jerTraj[i] = new Real[numOfdata];
+	}
+
+	otgSCurve->calculateJointTrajectory(posTraj, velTraj, accTraj, jerTraj, numOfdata);
+
+	saveRealArray2txt(posTraj, dof, numOfdata, filepath + "position.txt");
+	saveRealArray2txt(velTraj, dof, numOfdata, filepath + "velocity.txt");
+	saveRealArray2txt(accTraj, dof, numOfdata, filepath + "acceleration.txt");
+	saveRealArray2txt(jerTraj, dof, numOfdata, filepath + "jerk.txt");
+
+	delete otgSCurve;
+	for (unsigned int i = 0; i < dof; i++)
+	{
+		delete[] posTraj[i];
+		delete[] velTraj[i];
+		delete[] accTraj[i];
+		delete[] jerTraj[i];
+	}
+	delete[] posTraj;
+	delete[] velTraj;
+	delete[] accTraj;
+	delete[] jerTraj;
 
 
-	//delete[] maxVelocity;
-	//delete[] maxAcceleration;
-	//delete[] maxJerk;
-	//delete[] currentPosition;
-	//delete[] currentVelocity;
-	//delete[] currentAcceleration;
-	//delete[] targetPosition;
-	//delete[] targetVelocity;
-	//delete[] currTime;
+	delete[] maxVelocity;
+	delete[] maxAcceleration;
+	delete[] maxJerk;
+	delete[] currentPosition;
+	delete[] currentVelocity;
+	delete[] currentAcceleration;
+	delete[] targetPosition;
+	delete[] targetVelocity;
+	delete[] currTime;
 
 	////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////

@@ -22,9 +22,9 @@ namespace irLib
 			tree->_tmin = RealMax;
 			tree->_bReversed = false;
 
-			tree->_minProfile = MinTimeProfileSCurve::min_notAssigned;
-			tree->_inopProfileBegin = InoperTimeProfileSCurve::inop_notAssigned;
-			tree->_inopProfileEnd = InoperTimeProfileSCurve::inop_notAssigned;
+			tree->_minProfile = ProfileSCurveStep1::profile_notAssigned;
+			tree->_inopProfileBegin = ProfileSCurveStep1::profile_notAssigned;
+			tree->_inopProfileEnd = ProfileSCurveStep1::profile_notAssigned;
 			tree->_t1begin = RealMax;
 			tree->_t1end = RealMax;
 			tree->_inoperTimeExist = false;
@@ -67,11 +67,15 @@ namespace irLib
 				// case 1/2 를 만들 수 있는 minimum profile 일 때만 inoperative time interval 찾을 수 있도록!
 				// 이 조건 넣는다면, min time 구할 때 reverse 하고 구했었던건 어떻게 처리할지 생각하기..
 				// 아래 세개 프로파일 말고도 많이 있을 수 있음 (일단 세개만)
-				if (decisionTreeStep1->_minProfile != min_PosTrapNegTri &&
-					decisionTreeStep1->_minProfile != min_PosTrapZeroNegTri &&
-					decisionTreeStep1->_minProfile != min_PosTriZeroNegTri)
+				if (decisionTreeStep1->_minProfile != profile_PosTriNegTri		 &&
+					decisionTreeStep1->_minProfile != profile_PosTriZeroNegTri	 &&
+					decisionTreeStep1->_minProfile != profile_PosTrapNegTri		 &&
+					decisionTreeStep1->_minProfile != profile_PosTrapZeroNegTri	 &&
+					decisionTreeStep1->_minProfile != profile_PosTrapNegTrap	 &&
+					decisionTreeStep1->_minProfile != profile_PosTrapZeroNegTrap &&
+					decisionTreeStep1->_minProfile != profile_PosTriNegTrap		 &&
+					decisionTreeStep1->_minProfile != profile_PosTriZeroNegTrap)
 					return;
-
 
 
 				if (decisionTreeStep1->_currentVelocity <= decisionTreeStep1->_targetVelocity)
@@ -85,7 +89,17 @@ namespace irLib
 			}
 			else
 			{
-				// a 를 0으로 내릴 때 v 가 0 위로 넘어가면 inoperative time interval 없을 듯...
+				if (decisionTreeStep1->_minProfile != profile_NegTriPosTri		 &&
+					decisionTreeStep1->_minProfile != profile_NegTriZeroPosTri	 &&
+					decisionTreeStep1->_minProfile != profile_NegTrapPosTri		 &&
+					decisionTreeStep1->_minProfile != profile_NegTrapZeroPosTri	 &&
+					decisionTreeStep1->_minProfile != profile_NegTrapPosTrap	 &&
+					decisionTreeStep1->_minProfile != profile_NegTrapZeroPosTrap &&
+					decisionTreeStep1->_minProfile != profile_NegTriPosTrap		 &&
+					decisionTreeStep1->_minProfile != profile_NegTriZeroPosTrap)
+					return;
+
+				// a 를 0으로 내릴 때 v 가 0 위로 넘어가면 inoperative time interval 없을 듯... 
 				if (RealBigger(decisionTreeStep1->_currentVelocity + calcDV_BackSlashAcc(decisionTreeStep1->_currentAcceleration, 0.0, decisionTreeStep1->_maxJerk), 0.0, 1E-6))
 					return;
 
@@ -103,16 +117,16 @@ namespace irLib
 
 			if (decisionTreeStep1->_inoperTimeExist)
 			{
-				calcInopTimeProfile_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_inopProfileBegin, decisionTreeStep1->_inopProfileEnd);
+				calcInopTimeProfile_SCurveStep1(decisionTreeStep1);
 				decisionTreeStep1->_t1begin += decisionTreeStep1->_tcurrNotChanging;
 				decisionTreeStep1->_t1end += decisionTreeStep1->_tcurrNotChanging;
 			}
 			
 		}
 
-		void calcInopTimeProfile_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1, InoperTimeProfileSCurve begin, InoperTimeProfileSCurve end)
+		void calcInopTimeProfile_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1)
 		{
-			if (begin == end)
+			if (decisionTreeStep1->_inopProfileBegin == decisionTreeStep1->_inopProfileEnd)
 			{
 				// 같으면 같은 프로파일이니까 여러번돌려서 솔루션 찾고 큰거 작은거 나눠서 뱉어야 함...
 			}
@@ -695,7 +709,7 @@ namespace irLib
 					if (Decision6_SCurveStep1InopTime(dtStep1))
 					{
 						dtStep1->_inoperTimeExist = true;
-						dtStep1->_inopProfileBegin = inop_NegTrapPosTri;
+						dtStep1->_inopProfileBegin = profile_NegTrapPosTri;
 					}
 				}
 				else
@@ -703,7 +717,7 @@ namespace irLib
 					if (Decision7_SCurveStep1InopTime(dtStep1))
 					{
 						dtStep1->_inoperTimeExist = true;
-						dtStep1->_inopProfileBegin = inop_NegTrapPosTrap;
+						dtStep1->_inopProfileBegin = profile_NegTrapPosTrap;
 					}
 				}
 			}
@@ -714,7 +728,7 @@ namespace irLib
 					if (Decision3_SCurveStep1InopTime(dtStep1))
 					{
 						dtStep1->_inoperTimeExist = true;
-						dtStep1->_inopProfileBegin = inop_NegTriPosTri;
+						dtStep1->_inopProfileBegin = profile_NegTriPosTri;
 					}
 				}
 				else
@@ -722,7 +736,7 @@ namespace irLib
 					if (Decision4_SCurveStep1InopTime(dtStep1))
 					{
 						dtStep1->_inoperTimeExist = true;
-						dtStep1->_inopProfileBegin = inop_NegTriPosTrap;
+						dtStep1->_inopProfileBegin = profile_NegTriPosTrap;
 					}
 				}
 			}
@@ -806,14 +820,14 @@ namespace irLib
 			{
 				LOG(" PosTrapZeroNegTri");
 				calculateTime_PosTrapZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				decisionTreeStep1->_minProfile = min_PosTrapZeroNegTri;
+				decisionTreeStep1->_minProfile = profile_PosTrapZeroNegTri;
 				goto decisionSuccess;
 			}
 			else
 			{
 				LOG(" PosTrapNegTri");
 				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				decisionTreeStep1->_minProfile = min_PosTrapNegTri;
+				decisionTreeStep1->_minProfile = profile_PosTrapNegTri;
 				goto decisionSuccess;
 			}
 
@@ -826,7 +840,7 @@ namespace irLib
 			{
 				LOG(" PosTrapNegTri");
 				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
-				decisionTreeStep1->_minProfile = min_PosTrapNegTri;
+				decisionTreeStep1->_minProfile = profile_PosTrapNegTri;
 				goto decisionSuccess;
 			}
 
@@ -859,6 +873,7 @@ namespace irLib
 			{
 				LOG(" PosTriNegTri");
 				calculateTime_PosTriNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTriNegTri;
 				goto decisionSuccess;
 			}
 
@@ -867,12 +882,14 @@ namespace irLib
 			{
 				LOG(" PosTriZeroNegTri");
 				calculateTime_PosTriZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTriZeroNegTri;
 				goto decisionSuccess;
 			}
 			else
 			{
 				LOG(" PosTriNegTri");
 				calculateTime_PosTriNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTriNegTri;
 				goto decisionSuccess;
 			}
 
@@ -918,6 +935,7 @@ namespace irLib
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
 				// restoring -end-
+				decisionTreeStep1->_minProfile = profile_NegTrapPosTri;
 				goto decisionSuccess;
 			}
 			else
@@ -940,12 +958,14 @@ namespace irLib
 			{
 				LOG(" PosTrapZeroNegTrap");
 				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTrapZeroNegTrap;
 				goto decisionSuccess;
 			}
 			else
 			{
 				LOG(" PosTrapNegTrap");
 				calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTrapNegTrap;
 				goto decisionSuccess;
 			}
 
@@ -959,6 +979,7 @@ namespace irLib
 				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTrapPosTri;
 				goto decisionSuccess;
 			}
 			else
@@ -970,6 +991,7 @@ namespace irLib
 				calculateTime_PosTrapZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTrapZeroPosTri;
 				goto decisionSuccess;
 			}
 
@@ -983,6 +1005,7 @@ namespace irLib
 				calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTrapPosTrap;
 				goto decisionSuccess;
 			}
 			else
@@ -994,6 +1017,7 @@ namespace irLib
 				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTrapZeroPosTrap;
 				goto decisionSuccess;
 			}
 
@@ -1012,12 +1036,14 @@ namespace irLib
 			{
 				LOG(" PosTriNegTrap");
 				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTriNegTrap;
 				goto decisionSuccess;
 			}
 			else
 			{
 				LOG(" PosTriZeroNegTrap");
 				calculateTime_PosTriZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTriZeroNegTrap;
 				goto decisionSuccess;
 			}
 
@@ -1030,6 +1056,7 @@ namespace irLib
 			{
 				LOG(" PosTriNegTrap");
 				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTriNegTrap;
 				goto decisionSuccess;
 			}
 
@@ -1038,12 +1065,14 @@ namespace irLib
 			{
 				LOG(" PosTrapNegTrap");
 				calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTrapNegTrap;
 				goto decisionSuccess;
 			}
 			else
 			{
 				LOG(" PosTrapZeroNegTrap");
 				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTrapZeroNegTrap;
 				goto decisionSuccess;
 			}
 
@@ -1067,6 +1096,7 @@ namespace irLib
 				calculateTime_PosTriZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTriZeroPosTrap;
 				goto decisionSuccess;
 			}
 			else
@@ -1078,6 +1108,7 @@ namespace irLib
 				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTriPosTrap;
 				goto decisionSuccess;
 			}
 
@@ -1095,6 +1126,7 @@ namespace irLib
 				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTriPosTrap;
 				goto decisionSuccess;
 			}
 
@@ -1108,6 +1140,7 @@ namespace irLib
 				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTrapZeroPosTrap;
 				goto decisionSuccess;
 			}
 			else
@@ -1119,6 +1152,7 @@ namespace irLib
 				calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTrapPosTrap;
 				goto decisionSuccess;
 			}
 
@@ -1152,6 +1186,7 @@ namespace irLib
 				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTriPosTrap;
 				goto decisionSuccess;
 			}
 			else
@@ -1163,6 +1198,7 @@ namespace irLib
 				calculateTime_PosTriZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTriZeroPosTrap;
 				goto decisionSuccess;
 			}
 
@@ -1176,6 +1212,7 @@ namespace irLib
 				calculateTime_PosTriNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTriPosTri;
 				goto decisionSuccess;
 			}
 			else
@@ -1187,6 +1224,7 @@ namespace irLib
 				calculateTime_PosTriZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTriZeroPosTri;
 				goto decisionSuccess;
 			}
 
@@ -1215,12 +1253,14 @@ namespace irLib
 			{
 				LOG(" PosTriZeroNegTri");
 				calculateTime_PosTriZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTriZeroNegTri;
 				goto decisionSuccess;
 			}
 			else
 			{
 				LOG(" PosTriNegTri");
 				calculateTime_PosTriNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTriNegTri;
 				goto decisionSuccess;
 			}
 
@@ -1229,12 +1269,14 @@ namespace irLib
 			{
 				LOG(" PosTriZeroNegTrap");
 				calculateTime_PosTriZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTriZeroNegTrap;
 				goto decisionSuccess;
 			}
 			else
 			{
 				LOG(" PosTriNegTrap");
 				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTriNegTrap;
 				goto decisionSuccess;
 			}
 
@@ -1268,6 +1310,7 @@ namespace irLib
 				calculateTime_PosTriNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTriPosTrap;
 				goto decisionSuccess;
 			}
 			else
@@ -1279,6 +1322,7 @@ namespace irLib
 				calculateTime_PosTriZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTriZeroPosTrap;
 				goto decisionSuccess;
 			}
 
@@ -1292,6 +1336,7 @@ namespace irLib
 				calculateTime_PosTriNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTriPosTri;
 				goto decisionSuccess;
 			}
 			else
@@ -1303,6 +1348,7 @@ namespace irLib
 				calculateTime_PosTriZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTriZeroPosTri;
 				goto decisionSuccess;
 			}
 
@@ -1316,6 +1362,7 @@ namespace irLib
 				calculateTime_PosTriNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTriPosTri;
 				goto decisionSuccess;
 			}
 			else
@@ -1343,6 +1390,7 @@ namespace irLib
 				calculateTime_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTrapPosTrap;
 				goto decisionSuccess;
 			}
 			else
@@ -1354,6 +1402,7 @@ namespace irLib
 				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTrapZeroPosTrap;
 				goto decisionSuccess;
 			}
 
@@ -1367,6 +1416,7 @@ namespace irLib
 				calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTrapPosTri;
 				goto decisionSuccess;
 			}
 			else
@@ -1378,6 +1428,7 @@ namespace irLib
 				calculateTime_PosTrapZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
+				decisionTreeStep1->_minProfile = profile_NegTrapZeroPosTri;
 				goto decisionSuccess;
 			}
 
@@ -1386,6 +1437,7 @@ namespace irLib
 			return;
 
 		decisionSuccess:
+			// 계산은 나중에... t1begin, t1end 프로파일 다 결정하고 나서!
 			decisionTreeStep1->_tmin += decisionTreeStep1->_tcurrNotChanging;
 			if (decisionTreeStep1->_bReversed)
 				ReverseSign_SCurveStep1(decisionTreeStep1);

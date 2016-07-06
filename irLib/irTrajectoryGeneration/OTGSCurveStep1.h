@@ -14,21 +14,26 @@ namespace irLib
 {
 	namespace irTG
 	{
-		enum MinTimeProfileSCurve
+		enum ProfileSCurveStep1
 		{
-			min_notAssigned = 0,
-			min_PosTrapNegTri,
-			min_PosTrapZeroNegTri,
-			min_PosTriZeroNegTri,
-		};
-
-		enum InoperTimeProfileSCurve
-		{
-			inop_notAssigned = 0,
-			inop_NegTriPosTri,
-			inop_NegTriPosTrap,
-			inop_NegTrapPosTri,
-			inop_NegTrapPosTrap,
+			profile_notAssigned = 0,
+			profile_PosTriNegTri,
+			profile_PosTriZeroNegTri,
+			profile_PosTrapNegTri,
+			profile_PosTrapZeroNegTri,
+			profile_PosTrapNegTrap,
+			profile_PosTrapZeroNegTrap,
+			profile_PosTriNegTrap,
+			profile_PosTriZeroNegTrap,
+			profile_NegTriPosTri,
+			profile_NegTriZeroPosTri,
+			profile_NegTrapPosTri,
+			profile_NegTrapZeroPosTri,
+			profile_NegTrapPosTrap,
+			profile_NegTrapZeroPosTrap,
+			profile_NegTriPosTrap,
+			profile_NegTriZeroPosTrap,
+			// neg도 있어야 inoperative 거기서 구분할 수 있을 듯...
 		};
 
 		typedef struct _treeSCurveStep1
@@ -49,9 +54,9 @@ namespace irLib
 			Real _tmin;									// minimum reachable time
 			bool _bReversed;
 
-			MinTimeProfileSCurve	_minProfile;		// min time profile for tmin
-			InoperTimeProfileSCurve _inopProfileBegin;	// inoperative time profile for t1begin
-			InoperTimeProfileSCurve _inopProfileEnd;	// inoperative time profile for t1bend
+			ProfileSCurveStep1	_minProfile;		// min time profile for tmin
+			ProfileSCurveStep1	_inopProfileBegin;	// inoperative time profile for t1begin
+			ProfileSCurveStep1	_inopProfileEnd;		// inoperative time profile for t1bend
 			Real _t1begin;								// begin time of inopertative interval if it exists
 			Real _t1end;								// end time of inopertative interval if it exists
 			bool _inoperTimeExist;						// bool: inoperative time interval exist
@@ -90,7 +95,7 @@ namespace irLib
 		void SetProfile4_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
 
 		// calculate time by profiles were set
-		void calcInopTimeProfile_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, InoperTimeProfileSCurve begin, InoperTimeProfileSCurve end);
+		void calcInopTimeProfile_SCurveStep1(TreeSCurveStep1* decisionTreeStep1);
 
 		// assistant function
 		void FromAToZero_SCurveStep1(TreeSCurveStep1* dtStep1);

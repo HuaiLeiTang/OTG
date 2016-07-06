@@ -25,9 +25,11 @@ namespace irLib
 			Real _targetVelocity;
 
 			Real _tcurr;	// current time
+			Real _tcurrNotChanging;	// current time never changed after first setting (for the function 'FromZeroToA_SCurveStep1': can be removed if not neddend)
 			Real _tsync;	// synchronized time calculated in step1
 
 			bool _bReversed;
+			bool _bAtoZero;
 		} TreeSCurveStep2;
 
 		enum SCurveStep2_Decision
@@ -45,6 +47,7 @@ namespace irLib
 
 		// assistant function
 		void FromAToZero_SCurveStep2(TreeSCurveStep2* dtStep2);
+		void FromZeroToA_SCurveStep2(TreeSCurveStep2* dtStep2); // restore function of 'FromAToZero_SCurveStep2'
 		void ReverseSign_SCurveStep2(TreeSCurveStep2* dtStep2);
 
 		// decision boolean function (comments are inside function definition, .cpp file)

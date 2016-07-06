@@ -71,11 +71,6 @@ namespace irLib
 			return (ai - af) / jmax;
 		}
 
-		Real calcDT_BackSlashAcc(Real ai, Real af, Real jmax)
-		{
-			return (ai - af) / jmax;
-		}
-
 		Real calcDV_revesreVShpaeAcc(Real ai, Real ahigh, Real af, Real jmax)
 		{
 			// ahigh > ai, af
