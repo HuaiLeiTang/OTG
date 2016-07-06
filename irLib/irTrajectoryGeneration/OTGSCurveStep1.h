@@ -148,6 +148,9 @@ namespace irLib
 		bool Decision41_SCurveStep1(TreeSCurveStep1* dtStep1);
 		bool Decision42_SCurveStep1(TreeSCurveStep1* dtStep1);
 		bool Decision43_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision44_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision45_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision46_SCurveStep1(TreeSCurveStep1* dtStep1);
 
 
 		// decision for inoperative time interval

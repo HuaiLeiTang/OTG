@@ -627,6 +627,38 @@ namespace irLib
 			return false;
 		}
 
+		bool Decision44_SCurveStep1(TreeSCurveStep1 * dtStep1)
+		{
+			cout << " - 44";
+			if (dtStep1->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep1->_currentAcceleration, dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk)
+				+ calcDV_VShapeAcc(0.0, -dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk) <= dtStep1->_targetVelocity)
+				return true;
+			return false;
+		}
+		bool Decision45_SCurveStep1(TreeSCurveStep1 * dtStep1)
+		{
+			cout << " - 45";
+			Real vaftertri = dtStep1->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep1->_currentAcceleration, dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk);
+			LOGIF(vaftertri >= dtStep1->_targetVelocity, "wrong1 - Decision45_SCurveStep1");
+			LOGIF(vaftertri <= dtStep1->_maxVelocity, "wrong2 - Decision45_SCurveStep1");
+			Real alow = calcALow_VShapeAcc(0.0, 0.0, dtStep1->_maxJerk, vaftertri, dtStep1->_targetVelocity);
+			if (dtStep1->_currentPosition + calcDP_reverseVShapeAcc(dtStep1->_currentAcceleration, dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk, dtStep1->_currentVelocity)
+				+ calcDP_VShapeAcc(0.0, alow, 0.0, dtStep1->_maxJerk, vaftertri) <= dtStep1->_targetPosition)
+				return true;
+			return false;
+		}
+		bool Decision46_SCurveStep1(TreeSCurveStep1 * dtStep1)
+		{
+			cout << " - 46";
+			//cout << "decision46" << endl;
+			//cout << dtStep1->_maxVelocity << '\t' << calcDV_VShapeAcc(0.0, -dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk) << endl;
+			//cout << dtStep1->_maxVelocity + calcDV_VShapeAcc(0.0, -dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk) << '\t' << dtStep1->_targetVelocity << endl;
+			//cout << "======" << endl;
+			if (dtStep1->_maxVelocity + calcDV_VShapeAcc(0.0, -dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk) <= dtStep1->_targetVelocity)
+				return true;
+			return false;
+		}
+
 		bool Decision0_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
 		{
 			// necessary conditions for existing of inoperative time interval
@@ -1235,7 +1267,7 @@ namespace irLib
 			}
 			else
 			{
-				goto decisionBox_22;
+				goto decisionBox_44;
 			}
 
 		decisionBox_33:
@@ -1430,6 +1462,39 @@ namespace irLib
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
 				decisionTreeStep1->_minProfile = profile_NegTrapZeroPosTri;
 				goto decisionSuccess;
+			}
+
+		decisionBox_44:
+			if (Decision44_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_45;
+			}
+			else
+			{
+				goto decisionBox_22;
+			}
+
+		decisionBox_45:
+			if (Decision45_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_46;
+			}
+			else
+			{
+				LOG(" PosTriNegTri");
+				calculateTime_PosTriNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTriNegTri;
+				goto decisionSuccess;
+			}
+
+		decisionBox_46:
+			if (Decision46_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_06;
+			}
+			else
+			{
+				goto decisionBox_17;
 			}
 
 		decisionBox_xx:

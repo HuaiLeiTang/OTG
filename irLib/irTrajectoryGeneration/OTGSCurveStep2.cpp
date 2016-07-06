@@ -500,7 +500,7 @@ namespace irLib
 		decisionBox_41:
 			if (Decision41_SCurveStep2(decisionTreeStep2))
 			{
-				goto decisionBox_33;
+				goto decisionBox_49;
 			}
 			else
 			{
@@ -612,6 +612,30 @@ namespace irLib
 				FromAToZero_SCurveStep2(decisionTreeStep2);
 				ReverseSign_SCurveStep2(decisionTreeStep2);
 				calculateProfile_PosTrapZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+		decisionBox_49:
+			if (Decision49_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" PosTriZeroNegTrap");
+				calculateProfile_PosTriZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				goto decisionBox_50;
+			}
+		decisionBox_50:
+			if (Decision50_SCurveStep2(decisionTreeStep2))
+			{
+				LOG(" PosTrapZeroNegTrap");
+				calculateProfile_PosTrapZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
+				return;
+			}
+			else
+			{
+				LOG(" PosTriZeroNegTrap");
+				calculateProfile_PosTriZeroNegTrap_SCurveStep2(decisionTreeStep2, profile);
 				return;
 			}
 		decisionBox_xx:
@@ -1323,6 +1347,33 @@ namespace irLib
 			return false;
 		}
 
+		bool Decision49_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 49";
+			Real vafterpostri = dtStep2->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			if (dtStep2->_tcurr
+				+ calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				+ calcDT_NegTrapezoidAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity)
+				>= dtStep2->_tsync)
+				return true;
+			return false;
+		}
+
+		bool Decision50_SCurveStep2(TreeSCurveStep2 * dtStep2)
+		{
+			cout << " - 50";
+			Real vafterpostri = dtStep2->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk);
+			Real hldTime = dtStep2->_tsync - dtStep2->_tcurr - calcDT_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk)
+				- calcDT_NegTrapezoidAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity);
+			LOGIF(hldTime >= 0.0, "holding time must be positive - Decision50_SCurveStep2");
+			if (dtStep2->_currentPosition
+				+ calcDP_reverseVShapeAcc(dtStep2->_currentAcceleration, dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, dtStep2->_currentVelocity)
+				+ calcDP_constVel(hldTime, vafterpostri)
+				+ calcDP_NegTrapezoidAcc(0.0, -dtStep2->_maxAcceleration, 0.0, dtStep2->_maxJerk, vafterpostri, dtStep2->_targetVelocity)
+				<= dtStep2->_targetPosition)
+				return true;
+			return false;
+		}
 
 		// Profile calculation function
 		void calculateProfile_PosTriZeroNegTri_SCurveStep2(TreeSCurveStep2* decisionTreeStep2, Profile* profile/*, const bool reverse*/) // (case 1) numerical solution
