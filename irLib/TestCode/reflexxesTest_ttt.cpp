@@ -21,7 +21,7 @@ using namespace irLib::irMath;
 using namespace irLib::irTG;
 
 std::string filepath_ys = "C:/Users/crazy/Desktop/Time optimization/sCurveTest/";
-std::string filepath = "D:/jkkim/Documents/matlabTest/otg/scurve/";
+std::string filepath = "D:/jkkim/Documents/projects/otgtest/";
 
 void saveReal1DArray2txt(Real* input, unsigned int size, std::string filename);
 void saveRealArray2txt(Real** input, unsigned int size1, unsigned int size2, std::string filename);
@@ -39,6 +39,7 @@ int main()
 	srand((unsigned int)time(NULL));
 	SerialOpenChainPtr robot = SerialOpenChainPtr(new efortRobot);
 	unsigned int dof = robot->getNumOfJoint();
+	dof = 1;
 
 	// variables for step 1 / step 2 test
 	//Real maxVel, maxAcc, maxJer, curPos, curVel, curAcc, tarPos, tarVel, curTime;
@@ -127,7 +128,7 @@ int main()
 
 		targetPosition[i] = makeRandLU(-maxPosition[i], maxPosition[i]);
 		targetVelocity[i] = makeRandLU(-maxVelocity[i], maxVelocity[i]);
-
+		
 		currTime[i] = 0.0;
 	}
 
@@ -153,6 +154,15 @@ int main()
 
 	//saveReal1DArray2txt(maxPosition, dof, filepath + "aaa.txt");
 
+	maxPosition[0] = 3.05433;
+	maxVelocity[0] = 1.74533;
+	maxAcceleration[0] = 8.72655;
+	maxJerk[0] = 3000;
+	currentPosition[0] = 2.29892;
+	currentVelocity[0] = 0.206199;
+	currentAcceleration[0] = 3.96184;
+	targetPosition[0] = -2.6934;
+	targetVelocity[0] = 0.05736;
 
 	OTGSCurve * otgSCurve = new OTGSCurve(dof);
 	otgSCurve->setInputParameters(maxVelocity, maxAcceleration, maxJerk, currentPosition, currentVelocity, currentAcceleration, targetPosition, targetVelocity);
@@ -169,7 +179,7 @@ int main()
 		accTraj[i] = new Real[numOfdata];
 		jerTraj[i] = new Real[numOfdata];
 	}
-
+	
 	otgSCurve->calculateJointTrajectory(posTraj, velTraj, accTraj, jerTraj, numOfdata);
 
 	saveRealArray2txt(posTraj, dof, numOfdata, filepath + "position.txt");
