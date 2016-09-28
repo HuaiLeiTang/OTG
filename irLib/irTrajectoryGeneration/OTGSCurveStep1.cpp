@@ -627,6 +627,45 @@ namespace irLib
 			return false;
 		}
 
+		bool Decision44_SCurveStep1(TreeSCurveStep1 * dtStep1)
+		{
+			cout << " - 44";
+			if (dtStep1->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep1->_currentAcceleration, dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk)
+				+ calcDV_VShapeAcc(0.0, -dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk) <= dtStep1->_targetVelocity)
+				return true;
+			return false;
+		}
+		bool Decision45_SCurveStep1(TreeSCurveStep1 * dtStep1)
+		{
+			cout << " - 45";
+			Real vaftertri = dtStep1->_currentVelocity + calcDV_revesreVShpaeAcc(dtStep1->_currentAcceleration, dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk);
+			LOGIF(vaftertri >= dtStep1->_targetVelocity, "wrong1 - Decision45_SCurveStep1");
+			LOGIF(vaftertri <= dtStep1->_maxVelocity, "wrong2 - Decision45_SCurveStep1");
+			Real alow = calcALow_VShapeAcc(0.0, 0.0, dtStep1->_maxJerk, vaftertri, dtStep1->_targetVelocity);
+			if (dtStep1->_currentPosition + calcDP_reverseVShapeAcc(dtStep1->_currentAcceleration, dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk, dtStep1->_currentVelocity)
+				+ calcDP_VShapeAcc(0.0, alow, 0.0, dtStep1->_maxJerk, vaftertri) <= dtStep1->_targetPosition)
+				return true;
+			return false;
+		}
+		bool Decision46_SCurveStep1(TreeSCurveStep1 * dtStep1)
+		{
+			cout << " - 46";
+			//cout << "decision46" << endl;
+			//cout << dtStep1->_maxVelocity << '\t' << calcDV_VShapeAcc(0.0, -dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk) << endl;
+			//cout << dtStep1->_maxVelocity + calcDV_VShapeAcc(0.0, -dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk) << '\t' << dtStep1->_targetVelocity << endl;
+			//cout << "======" << endl;
+			if (dtStep1->_maxVelocity + calcDV_VShapeAcc(0.0, -dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk) <= dtStep1->_targetVelocity)
+				return true;
+			return false;
+		}
+
+		bool Decisionxx_SCurveStep1B(TreeSCurveStep1 * dtStep1)
+		{
+			// temp for 1B.010 decision box...
+
+			return false;
+		}
+
 		bool Decision0_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
 		{
 			// necessary conditions for existing of inoperative time interval
@@ -696,6 +735,17 @@ namespace irLib
 				+ calcDP_NegTrapezoidAcc(dtStep1->_currentAcceleration, -dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk, dtStep1->_currentVelocity, 0.0)
 				+ calcDP_TrapezoidAcc(0.0, dtStep1->_maxAcceleration, 0.0, dtStep1->_maxJerk, 0.0, dtStep1->_targetVelocity) <= dtStep1->_targetPosition)
 				return true;
+			return false;
+		}
+
+		bool Decisionxxxx_SCurveStep1InopTime(TreeSCurveStep1 * dtStep1)
+		{
+			Real tmpTime;
+			bool ret = calculateTime_PosTriNegTri_SCurveStep1(dtStep1, tmpTime);
+			if (ret){
+				dtStep1->_t1begin = tmpTime;
+				return true;
+			}
 			return false;
 		}
 
@@ -1014,7 +1064,9 @@ namespace irLib
 				LOG(" NegTrapZeroPosTrap");
 				FromAToZero_SCurveStep1(decisionTreeStep1);
 				ReverseSign_SCurveStep1(decisionTreeStep1);
-				calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				//calculateTime_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				//calculateTime_PosTrapNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				cout << calculateTime_PosTrapZeroNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin) << endl;
 				ReverseSign_SCurveStep1(decisionTreeStep1);
 				FromZeroToA_SCurveStep1(decisionTreeStep1);
 				decisionTreeStep1->_minProfile = profile_NegTrapZeroPosTrap;
@@ -1235,7 +1287,7 @@ namespace irLib
 			}
 			else
 			{
-				goto decisionBox_22;
+				goto decisionBox_44;
 			}
 
 		decisionBox_33:
@@ -1432,6 +1484,39 @@ namespace irLib
 				goto decisionSuccess;
 			}
 
+		decisionBox_44:
+			if (Decision44_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_45;
+			}
+			else
+			{
+				goto decisionBox_22;
+			}
+
+		decisionBox_45:
+			if (Decision45_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_46;
+			}
+			else
+			{
+				LOG(" PosTriNegTri");
+				calculateTime_PosTriNegTri_SCurveStep1(decisionTreeStep1, decisionTreeStep1->_tmin);
+				decisionTreeStep1->_minProfile = profile_PosTriNegTri;
+				goto decisionSuccess;
+			}
+
+		decisionBox_46:
+			if (Decision46_SCurveStep1(decisionTreeStep1))
+			{
+				goto decisionBox_06;
+			}
+			else
+			{
+				goto decisionBox_17;
+			}
+
 		decisionBox_xx:
 			LOG(" not implemented yet....");
 			return;
@@ -1446,7 +1531,7 @@ namespace irLib
 		}
 
 		// minimum time calc fcns
-		void calculateTime_PosTriNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // numerical solution (case 1)
+		bool calculateTime_PosTriNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // numerical solution (case 1)
 		{
 			NewtonRaphson solver(2, 2);
 			solver.settolerance(1E-10);
@@ -1465,11 +1550,11 @@ namespace irLib
 			while (1)
 			{
 				count++;
-				if (count > 10)
+				if (count % 10 == 0)// (count > 10)
 				{
 					X(0) = makeRandLU(decisionTreeStep1->_currentAcceleration, decisionTreeStep1->_maxAcceleration);
 					X(1) = makeRandLU(-decisionTreeStep1->_maxAcceleration, 0);
-					count = 0;
+					//count = 0;
 				}
 
 				solver.solve(X);
@@ -1495,6 +1580,11 @@ namespace irLib
 				{
 					X(1) = (X(1) + (-decisionTreeStep1->_maxAcceleration)) / 2;
 				}
+
+				if (count > 1E3)
+				{
+					return false;
+				}
 			}
 
 			ap1 = result(0), ap2 = result(1);
@@ -1504,16 +1594,24 @@ namespace irLib
 			e34 = e23;
 
 			saveTime = e01 + e12 + e23 + e34;
+
+			return check_PosTriNegTri_SCurveStep1(decisionTreeStep1, ap1, e01, e12, e23, e34);
 		}
 
-		void calculateTime_PosTriZeroNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 2)
+		bool calculateTime_PosTriZeroNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 2)
 		{
 			Real a0, vt, v0, pt, p0, jmax, amax, vmax;
 			substitutefcn(decisionTreeStep1, a0, vt, v0, pt, p0, jmax, amax, vmax);
 
 			Real ap1, ap2, e23;
+
+
 			ap1 = 1 / std::sqrt(2) * std::sqrt(a0*a0 + 2 * jmax*(vmax - v0));
-			ap2 = -1 / std::sqrt(2) * std::sqrt(-a0*a0 + 2 * ap1*ap1 + 2 * jmax*v0 - 2 * jmax*vt);
+			Real posval1 = -a0*a0 + 2 * ap1*ap1 + 2 * jmax*v0 - 2 * jmax*vt;
+			if (RealLess(posval1, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			ap2 = -1 / std::sqrt(2) * std::sqrt(posval1);
+			
+
 			e23 = (6 * a0 * a0 * ap1 - 3 * a0 * a0 * ap2 + 6 * ap1 * ap1 * ap2 - 6 * jmax * jmax * p0 + 6 * jmax * jmax * pt -
 				2 * a0 * a0 * a0 - 6 * ap1 * ap1 * ap1 + 6 * a0*jmax*v0 - 12 * ap1*jmax*v0 +
 				6 * ap2 * jmax*v0 + 6 * ap2 * jmax*vt) / (6 * jmax * jmax * v0 - 3 * a0 * a0 * jmax + 6 * ap1 * ap1 * jmax);
@@ -1523,11 +1621,13 @@ namespace irLib
 			e12 = ap1 / jmax;
 			e34 = -ap2 / jmax;
 			e45 = e34;
-
+			
 			saveTime = e01 + e12 + e23 + e34 + e45;
+
+			return check_PosTriZeroNegTri_SCurveStep1(decisionTreeStep1, ap1, ap2, e01, e12, e23, e34, e45);
 		}
 
-		void calculateTime_PosTrapNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 3)
+		bool calculateTime_PosTrapNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 3)
 		{
 			Real a0, vt, v0, pt, p0, jmax, amax, vmax;
 			substitutefcn(decisionTreeStep1, a0, vt, v0, pt, p0, jmax, amax, vmax);
@@ -1567,16 +1667,23 @@ namespace irLib
 			e45 = e34;
 
 			saveTime = e01 + e12 + e23 + e34 + e45;
+
+			return check_PosTrapNegTri_SCurveStep1(decisionTreeStep1, ap2, e01, e12, e23, e34, e45);
 		}
 
-		void calculateTime_PosTrapZeroNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 4)
+		bool calculateTime_PosTrapZeroNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 4)
 		{
 			Real a0, vt, v0, pt, p0, jmax, amax, vmax;
 			substitutefcn(decisionTreeStep1, a0, vt, v0, pt, p0, jmax, amax, vmax);
 
 			Real ap2, e12, e34;
+
 			e12 = (-a0 * a0 + 2 * amax * amax + 2 * jmax*v0 - 2 * jmax*vmax) / (-2 * jmax*amax);
-			ap2 = -1 / std::sqrt(2) * std::sqrt(-a0 * a0 + 2 * amax * amax + 2 * e12*jmax*amax + 2 * jmax*v0 - 2 * jmax*vt);
+
+			Real posval1 = -a0 * a0 + 2 * amax * amax + 2 * e12*jmax*amax + 2 * jmax*v0 - 2 * jmax*vt;
+			if (RealLess(posval1, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+
+			ap2 = -1 / std::sqrt(2) * std::sqrt(posval1);
 			e34 = (3 * a0 * a0 * ap2 - 6 * a0 * a0 * amax - 6 * amax * amax * ap2 + 6 * jmax * jmax * p0 - 6 * jmax * jmax * pt +
 				2 * a0 * a0 * a0 + 6 * amax * amax * amax + 6 * e12*jmax * jmax * v0 + 3 * amax*e12 * e12 * jmax * jmax -
 				6 * a0*jmax*v0 + 12 * amax*jmax*v0 - 6 * ap2*jmax*v0 - 6 * ap2*jmax*vt - 3 * a0 * a0 * e12*jmax
@@ -1589,17 +1696,22 @@ namespace irLib
 			e56 = e45;
 
 			saveTime = e01 + e12 + e23 + e34 + e45 + e56;
+
+			return check_PosTrapZeroNegTri_SCurveStep1(decisionTreeStep1, ap2, e01, e12, e23, e34, e45, e56);
 		}
 
-		void calculateTime_PosTrapNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 5)
+		bool calculateTime_PosTrapNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 5)
 		{
 			Real a0, vt, v0, pt, p0, jmax, amax, vmax;
 			substitutefcn(decisionTreeStep1, a0, vt, v0, pt, p0, jmax, amax, vmax);
 
 			Real e12, e45;
-			e45 = -(2 * jmax*vt + 3 * amax * amax - std::sqrt((std::pow(a0, 4)) / 2 - (4 * std::pow(a0, 3) * amax) / 3 +
+			Real posval1 = (std::pow(a0, 4)) / 2 - (4 * std::pow(a0, 3) * amax) / 3 +
 				std::pow(amax, 4) + a0*a0 * amax*amax + 2 * jmax*jmax * v0*v0 + 2 * jmax*jmax * vt*vt - 2 * a0*a0 * jmax*v0 -
-				2 * amax*amax * jmax*v0 - 2 * amax * amax * jmax*vt - 4 * amax*jmax*jmax * p0 + 4 * amax*jmax * jmax * pt + 4 * a0*amax*jmax*v0)) / (2 * amax*jmax);
+				2 * amax*amax * jmax*v0 - 2 * amax * amax * jmax*vt - 4 * amax*jmax*jmax * p0 + 4 * amax*jmax * jmax * pt + 4 * a0*amax*jmax*v0;
+			if (RealLess(posval1, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+
+			e45 = -(2 * jmax*vt + 3 * amax * amax - std::sqrt(posval1)) / (2 * amax*jmax);
 			e12 = (a0 * a0 - 2 * jmax*v0 + 2 * jmax*vt + 2 * amax*e45*jmax) / (2 * amax*jmax);
 
 			Real e01, e23, e34, e56;
@@ -1609,9 +1721,11 @@ namespace irLib
 			e56 = e23;
 
 			saveTime = e01 + e12 + e23 + e34 + e45 + e56;
+
+			return check_PosTrapNegTrap_SCurveStep1(decisionTreeStep1, e01, e12, e23, e34, e45, e56);
 		}
 
-		void calculateTime_PosTrapZeroNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 6)
+		bool calculateTime_PosTrapZeroNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 6)
 		{
 			Real a0, vt, v0, pt, p0, jmax, amax, vmax;
 			substitutefcn(decisionTreeStep1, a0, vt, v0, pt, p0, jmax, amax, vmax);
@@ -1629,9 +1743,11 @@ namespace irLib
 			e67 = e23;
 
 			saveTime = e01 + e12 + e23 + e34 + e45 + e56 + e67;
+
+			return check_PosTrapZeroNegTrap_SCurveStep1(decisionTreeStep1, e01, e12, e23, e34, e45, e56, e67);
 		}
 
-		void calculateTime_PosTriNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 7)
+		bool calculateTime_PosTriNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 7)
 		{
 			Real a0, vt, v0, pt, p0, jmax, amax, vmax;
 			substitutefcn(decisionTreeStep1, a0, vt, v0, pt, p0, jmax, amax, vmax);
@@ -1672,14 +1788,17 @@ namespace irLib
 			e45 = e23;
 
 			saveTime = e01 + e12 + e23 + e34 + e45;
+
+			return check_PosTriNegTrap_SCurveStep1(decisionTreeStep1, ap1, e01, e12, e23, e34, e45);
 		}
 		
-		void calculateTime_PosTriZeroNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 8)
+		bool calculateTime_PosTriZeroNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime) // closed-form solution (case 8)
 		{
 			Real a0, vt, v0, pt, p0, jmax, amax, vmax;
 			substitutefcn(decisionTreeStep1, a0, vt, v0, pt, p0, jmax, amax, vmax);
 
 			Real ap1, e01, e12, e23, e34, e45, e56;
+			if (RealLess(0.5*a0*a0 + vmax*jmax - v0*jmax, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
 			ap1 = std::sqrt(0.5*a0*a0 + vmax*jmax - v0*jmax);
 
 			e01 = (ap1 - a0) / jmax;
@@ -1707,6 +1826,138 @@ namespace irLib
 			e23 = (pt - p0 - xi01 - xi12 - xi34 - xi45 - xi56) / vmax;
 
 			saveTime = e01 + e12 + e23 + e34 + e45 + e56;
+
+			return check_PosTriZeroNegTrap_SCurveStep1(decisionTreeStep1, ap1, e01, e12, e23, e34, e45, e56);
+		}
+
+		bool check_PosTriNegTri_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1, Real ap1, Real e01, Real e12, Real e23, Real e34)
+		{
+			if (RealLess(ap1, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealBigger(ap1, decisionTreeStep1->_maxAcceleration, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e01, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e12, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e23, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e34, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealBigger(decisionTreeStep1->_currentVelocity 
+				+ calcDV_revesreVShpaeAcc(decisionTreeStep1->_currentAcceleration, ap1, 0.0, decisionTreeStep1->_maxJerk),
+				decisionTreeStep1->_maxVelocity, EPS_FOR_CHECK_VALIDITY)) {	return false; }
+			return true;
+		}
+
+		bool check_PosTriZeroNegTri_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1, Real ap1, Real ap2, Real e01, Real e12, Real e23, Real e34, Real e45)
+		{
+			if (RealLess(ap1, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealBigger(ap1, decisionTreeStep1->_maxAcceleration, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealBigger(ap2, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(ap2, -decisionTreeStep1->_maxAcceleration, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e01, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e12, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e23, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e34, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e45, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealBigger(decisionTreeStep1->_currentVelocity 
+				+ calcDV_revesreVShpaeAcc(decisionTreeStep1->_currentAcceleration, ap1, 0.0, decisionTreeStep1->_maxJerk),
+				decisionTreeStep1->_maxVelocity, EPS_FOR_CHECK_VALIDITY)) {	return false; }
+			return true;
+		}
+
+		bool check_PosTrapNegTri_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1, Real ap2, Real e01, Real e12, Real e23, Real e34, Real e45)
+		{
+			if (RealBigger(ap2, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(ap2, -decisionTreeStep1->_maxAcceleration, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e01, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e12, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e23, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e34, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e45, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealBigger(decisionTreeStep1->_currentVelocity
+				+ calcDV_SlashAcc(decisionTreeStep1->_currentAcceleration, decisionTreeStep1->_maxAcceleration, decisionTreeStep1->_maxJerk)
+				+ calcDV_ConstAcc(e12, decisionTreeStep1->_maxAcceleration)
+				+ calcDV_BackSlashAcc(decisionTreeStep1->_maxAcceleration, 0.0, decisionTreeStep1->_maxJerk),
+				decisionTreeStep1->_maxVelocity, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			return true;
+		}
+
+		bool check_PosTrapZeroNegTri_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1, Real ap2, Real e01, Real e12, Real e23, Real e34, Real e45, Real e56)
+		{
+			if (RealBigger(ap2, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(ap2, -decisionTreeStep1->_maxAcceleration, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e01, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e12, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e23, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e34, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e45, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e56, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealBigger(decisionTreeStep1->_currentVelocity
+				+ calcDV_SlashAcc(decisionTreeStep1->_currentAcceleration, decisionTreeStep1->_maxAcceleration, decisionTreeStep1->_maxJerk)
+				+ calcDV_ConstAcc(e12, decisionTreeStep1->_maxAcceleration)
+				+ calcDV_BackSlashAcc(decisionTreeStep1->_maxAcceleration, 0.0, decisionTreeStep1->_maxJerk),
+				decisionTreeStep1->_maxVelocity, EPS_FOR_CHECK_VALIDITY)) {	return false; }
+			return true;
+		}
+
+		bool check_PosTrapNegTrap_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1, Real e01, Real e12, Real e23, Real e34, Real e45, Real e56)
+		{
+			if (RealLess(e01, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e12, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e23, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e34, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e45, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e56, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealBigger(decisionTreeStep1->_currentVelocity
+				+ calcDV_SlashAcc(decisionTreeStep1->_currentAcceleration, decisionTreeStep1->_maxAcceleration, decisionTreeStep1->_maxJerk)
+				+ calcDV_ConstAcc(e12, decisionTreeStep1->_maxAcceleration)
+				+ calcDV_BackSlashAcc(decisionTreeStep1->_maxAcceleration, 0.0, decisionTreeStep1->_maxJerk),
+				decisionTreeStep1->_maxVelocity, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			return true;
+		}
+
+		bool check_PosTrapZeroNegTrap_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1, Real e01, Real e12, Real e23, Real e34, Real e45, Real e56, Real e67)
+		{
+			if (RealLess(e01, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e12, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e23, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e34, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e45, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e56, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e67, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealBigger(decisionTreeStep1->_currentVelocity
+				+ calcDV_SlashAcc(decisionTreeStep1->_currentAcceleration, decisionTreeStep1->_maxAcceleration, decisionTreeStep1->_maxJerk)
+				+ calcDV_ConstAcc(e12, decisionTreeStep1->_maxAcceleration)
+				+ calcDV_BackSlashAcc(decisionTreeStep1->_maxAcceleration, 0.0, decisionTreeStep1->_maxJerk),
+				decisionTreeStep1->_maxVelocity, EPS_FOR_CHECK_VALIDITY)) {	return false; }
+			return true;
+		}
+
+		bool check_PosTriNegTrap_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1, Real ap1, Real e01, Real e12, Real e23, Real e34, Real e45)
+		{
+			if (RealLess(ap1, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealBigger(ap1, decisionTreeStep1->_maxAcceleration, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e01, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e12, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e23, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e34, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e45, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealBigger(decisionTreeStep1->_currentVelocity
+				+ calcDV_revesreVShpaeAcc(decisionTreeStep1->_currentAcceleration, ap1, 0.0, decisionTreeStep1->_maxJerk),
+				decisionTreeStep1->_maxVelocity, EPS_FOR_CHECK_VALIDITY)) {	return false; }
+			return true;
+		}
+
+		bool check_PosTriZeroNegTrap_SCurveStep1(TreeSCurveStep1 * decisionTreeStep1, Real ap1, Real e01, Real e12, Real e23, Real e34, Real e45, Real e56)
+		{
+			if (RealLess(ap1, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealBigger(ap1, decisionTreeStep1->_maxAcceleration, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e01, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e12, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e23, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e34, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e45, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealLess(e56, 0.0, EPS_FOR_CHECK_VALIDITY)) { return false; }
+			if (RealBigger(decisionTreeStep1->_currentVelocity
+				+ calcDV_revesreVShpaeAcc(decisionTreeStep1->_currentAcceleration, ap1, 0.0, decisionTreeStep1->_maxJerk),
+				decisionTreeStep1->_maxVelocity, EPS_FOR_CHECK_VALIDITY)) {	return false; }
+			return true;
 		}
 
 

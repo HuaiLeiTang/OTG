@@ -100,6 +100,8 @@ namespace irLib
 		bool Decision46_SCurveStep2(TreeSCurveStep2* dtStep2);
 		bool Decision47_SCurveStep2(TreeSCurveStep2* dtStep2);
 		bool Decision48_SCurveStep2(TreeSCurveStep2* dtStep2);
+		bool Decision49_SCurveStep2(TreeSCurveStep2* dtStep2);
+		bool Decision50_SCurveStep2(TreeSCurveStep2* dtStep2);
 
 		// Profile calculation function
 		// 수정해야되는 부분 : case 1, 8의 경우 numerical 하게 풀기때문에 이상한 해가 나왔을 경우 다시 풀어주는 루틴 추가해줘야함

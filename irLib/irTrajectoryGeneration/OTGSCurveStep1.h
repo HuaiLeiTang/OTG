@@ -10,6 +10,8 @@
 using namespace std;
 using namespace irLib::irMath;
 
+#define EPS_FOR_CHECK_VALIDITY 1E-5
+
 namespace irLib
 {
 	namespace irTG
@@ -75,15 +77,24 @@ namespace irLib
 		void calculateMiniumumTimeSCurve(TreeSCurveStep1* decisionTreeStep1);
 
 		// calculate minimum time and save at _tmin
-		void calculateTime_PosTriNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // numerical solution (case 1)
-		void calculateTime_PosTriZeroNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 2)
-		void calculateTime_PosTrapNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 3)
-		void calculateTime_PosTrapZeroNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 4)
-		void calculateTime_PosTrapNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 5)
-		void calculateTime_PosTrapZeroNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 6)
-		void calculateTime_PosTriNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 7)
-		void calculateTime_PosTriZeroNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 8)
+		bool calculateTime_PosTriNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // numerical solution (case 1)
+		bool calculateTime_PosTriZeroNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 2)
+		bool calculateTime_PosTrapNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 3)
+		bool calculateTime_PosTrapZeroNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 4)
+		bool calculateTime_PosTrapNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 5)
+		bool calculateTime_PosTrapZeroNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 6)
+		bool calculateTime_PosTriNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 7)
+		bool calculateTime_PosTriZeroNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real& saveTime); // closed-form solution (case 8)
 		
+		// check validity of profiles
+		bool check_PosTriNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real ap1, Real e01, Real e12, Real e23, Real e34); // case 1
+		bool check_PosTriZeroNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real ap1, Real ap2, Real e01, Real e12, Real e23, Real e34, Real e45); // case 2
+		bool check_PosTrapNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real ap2, Real e01, Real e12, Real e23, Real e34, Real e45); // case 3
+		bool check_PosTrapZeroNegTri_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real ap2, Real e01, Real e12, Real e23, Real e34, Real e45, Real e56); // case 4
+		bool check_PosTrapNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real e01, Real e12, Real e23, Real e34, Real e45, Real e56); // case 5
+		bool check_PosTrapZeroNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real e01, Real e12, Real e23, Real e34, Real e45, Real e56, Real e67); // case 6
+		bool check_PosTriNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real ap1, Real e01, Real e12, Real e23, Real e34, Real e45); // case 7
+		bool check_PosTriZeroNegTrap_SCurveStep1(TreeSCurveStep1* decisionTreeStep1, Real ap1, Real e01, Real e12, Real e23, Real e34, Real e45, Real e56); // case 8
 
 		// main function for inoperative time interval ( called inside the function 'calculateMinimumTimeAndInoperTimeSCurve' )
 		void calculateInoperTimeSCurve(TreeSCurveStep1* decisionTreeStep1);
@@ -148,6 +159,11 @@ namespace irLib
 		bool Decision41_SCurveStep1(TreeSCurveStep1* dtStep1);
 		bool Decision42_SCurveStep1(TreeSCurveStep1* dtStep1);
 		bool Decision43_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision44_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision45_SCurveStep1(TreeSCurveStep1* dtStep1);
+		bool Decision46_SCurveStep1(TreeSCurveStep1* dtStep1);
+
+		bool Decisionxx_SCurveStep1B(TreeSCurveStep1* dtStep1);
 
 
 		// decision for inoperative time interval
@@ -161,6 +177,7 @@ namespace irLib
 		bool Decision7_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
 
 
+		bool Decisionxxxx_SCurveStep1InopTime(TreeSCurveStep1* dtStep1);
 
 		// functions for numerical process
 		void PosTriNegTriFcn(const VectorX& x, VectorX& f, MatrixX& ig, void* f_data); // case 1
